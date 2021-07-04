@@ -1,0 +1,137 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PerksController : MonoBehaviour
+{
+    [SerializeField] private List<PerkSO> perks;
+    int curretPerkIndex = -1;
+    GameObject CurretScript;
+    int tempPerkForChoise;
+
+    public GameObject perkNotification;
+
+
+    public GameObject WindowPerk;
+    public Animator Card;
+    public Animator Buttons;
+    public Animator TextObj;
+
+
+    public Text NamePerk;
+    public Text DescrPerk;
+    public Image IcoPerk;
+    public Transform Borders;
+    public GameObject Particle1,Particle2;
+
+    public GameObject TemplatePerk;
+
+
+
+    public void ChoisePerk(bool choise) 
+    {
+        if (choise)
+        {
+            perkNotification.SetActive(true);
+            perkNotification.GetComponent<Animation>().Play("ShowPerkOnRoad");
+            PerkSO temp = perks[tempPerkForChoise];
+            perkNotification.transform.Find("Element").GetComponent<SpriteRenderer>().sprite = temp.Ico;
+            if (curretPerkIndex >= 0)
+            {
+                Destroy(CurretScript);
+            }
+            curretPerkIndex = tempPerkForChoise;
+            CurretScript = Instantiate(Resources.Load<GameObject>("Bonus/Perks/" + temp.NameScript));
+            Card.Play("PickPerk");
+        }
+        else 
+        {
+            Card.SetFloat("SpeedAnim", -1);
+            Card.Play("cardShow");
+        }
+
+
+        Buttons.SetFloat("SpeedAnim", -1);
+        Buttons.Play("ButtonShow");
+        TextObj.SetFloat("SpeedAnim",-1);
+        TextObj.Play("TextShow");
+
+
+
+    }
+
+    IEnumerator ClosePerks()
+    {
+        yield return new WaitForSeconds(0.9f);
+        Time.timeScale = 1;
+        WindowPerk.SetActive(false);
+    }
+
+    public void SpawnPerk(Vector3 TargetCoordinate) 
+    {
+        if (curretPerkIndex >= 0)
+        {
+            PerkSO temp = perks[curretPerkIndex];
+            perks.RemoveAt(curretPerkIndex);
+            tempPerkForChoise = Random.Range(0, perks.Count - 1);
+            perks.Add(temp);
+        }
+        else 
+            tempPerkForChoise = Random.Range(0, perks.Count - 1);
+
+        GameObject tempOnRoad = new GameObject();
+        tempOnRoad.transform.position = TargetCoordinate;
+        tempOnRoad.transform.eulerAngles = new Vector3(-90,0, Random.Range(-10,-140));
+        tempOnRoad.transform.Find("ico").GetComponent<SpriteRenderer>().sprite = perks[tempPerkForChoise].Ico;
+    }
+
+    public void PerkGet()
+    {
+        Buttons.SetFloat("SpeedAnim", 1);
+        Card.SetFloat("SpeedAnim", 1);
+        TextObj.SetFloat("SpeedAnim", 1);
+
+        //УБРАТЬ
+        string name;
+        string desc;
+
+        //if (PlayerPrefs.GetInt("lg") == 1)
+        //{
+            name = perks[tempPerkForChoise].NameRU;
+            desc = perks[tempPerkForChoise].DescriptionRU;
+        //}
+        //else 
+        //{
+        //    name = perks[tempPerkForChoise].NameRU;
+        //    desc = perks[tempPerkForChoise].DescriptionRU;
+        //}
+
+        NamePerk.text = name;
+        DescrPerk.text = desc;
+        IcoPerk.sprite = perks[tempPerkForChoise].Ico;
+
+
+        Time.timeScale = 0;
+        ColorPerk();
+        WindowPerk.SetActive(true);
+    }
+
+    void ColorPerk() 
+    {
+        float H, S, V;
+        Color.RGBToHSV(perks[tempPerkForChoise].MainColor,out H,out S,out V);
+        Color TextColor = Color.HSVToRGB(H, S+0.15f, V-0.2f);
+        Color Border = Color.HSVToRGB(H, S - 0.2f, V-0.5f);
+        Card.GetComponent<Image>().color = perks[tempPerkForChoise].MainColor;
+        NamePerk.color = TextColor;
+        DescrPerk.color = TextColor;
+        foreach (Transform temp  in Borders) 
+        {
+            temp.GetComponent<Image>().color = Border;
+        }
+
+
+
+    }
+}

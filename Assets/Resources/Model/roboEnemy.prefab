@@ -1295,7 +1295,7 @@ GameObject:
   - component: {fileID: 6515442476390198598}
   - component: {fileID: 6515442476390198592}
   - component: {fileID: 6515442476390198597}
-  - component: {fileID: 6515442476390198599}
+  - component: {fileID: 2376352993128673408}
   m_Layer: 9
   m_Name: roboEnemy
   m_TagString: enemy
@@ -1352,7 +1352,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.94251436
+  - screenRelativeHeight: 0.999
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 1170707582699006278}
@@ -1387,7 +1387,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6515442476390198599
+--- !u!114 &2376352993128673408
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1396,20 +1396,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6245060812264149020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 442c4f20396dd8041a2eafda70e545cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ef96e6d01ec0b54f89083ad3913391d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GoTo: {fileID: 0}
-  MoveSpeed: 0
-  Dnager: 0
-  MatDanger: {fileID: 2100000, guid: 5cdca6f6cc2d95a40a0b77b72ce2c0ec, type: 2}
-  LodsMesh:
-  - {fileID: 1170707582699006278}
-  - {fileID: 7281236382478107398}
-  - {fileID: 8912879766744444197}
-  True_light: {fileID: 0}
-  Fake_light: {fileID: 0}
-  Helmet: {fileID: 0}
 --- !u!1 &6319012800923411592
 GameObject:
   m_ObjectHideFlags: 0

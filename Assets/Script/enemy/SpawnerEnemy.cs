@@ -1,51 +1,88 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Random = UnityEngine.Random;
+
+[Serializable]
+class EnemyBehaviorCount 
+{
+    int count;
+    public int Count;
+    public EnemyAIBase Type;
+    public void MinusCount()
+    {
+        Debug.Log("minus Count = " + Count + "  type "+ Type.GetType());
+        Count-=1;
+    }
+}
+
+
+
 public class SpawnerEnemy : MonoBehaviour
 {
-    public GameObject Enemy;
-    public int EnemyCount = 0;
+    [SerializeField] List<EnemyBehaviorCount> _avalibBehavior = new List<EnemyBehaviorCount>();
+    [SerializeField] int           _maxOneTimeEnemy = 10;
+    [SerializeField] int           _enemyCountNow   = 0;
+                                            //  x - x    z  -  z 
+    [SerializeField] float[,]      _siteCoordinate = 
+                                               { { 15f, 16f, 10f,-10.5f  },      //Up
+                                                 {-15f,-16f, 10f,-10.5f  },      //Down
+                                                 {-15f, 16f, 10f, 10.5f  },      //Left
+                                                 {-15f, 16f,-10f,-10.5f  } };    //Right
+    //public GameObject Enemy;
+    int _allAvalibleCount;
 
     private void Start()
     {
-        InvokeRepeating("ChoiseSite",0f,1f);
+        foreach (EnemyBehaviorCount temp in _avalibBehavior) 
+        {
+            _allAvalibleCount += temp.Count;
+        }
+        InvokeRepeating(nameof(ChoiseSite), 0f, 1f);
     }
-                                 //x-x    z   -  z 
-    float[,] SiteCoordinate = { {15f,16f,10f,-10.5f },  //вверх
-                                {-15f,-16f,10f,-10.5f}, //вниз
-                                {-15f,16f,10f,10.5f },     //Влево
-                                {-15,16,-10f,-10.5f } };    //вправо
 
-    int I_danger = 0;
+    public void MinusEnemy() => _enemyCountNow--;
 
     void ChoiseSite() 
     {
-        if (EnemyCount <= 10)
+        if (_allAvalibleCount > 0)
         {
-            EnemyCount++;
-            int i = Random.Range(0, 4);
-            Spawn(Random.Range(SiteCoordinate[i, 0], SiteCoordinate[i, 1]), Random.Range(SiteCoordinate[i, 2], SiteCoordinate[i, 3]));
+            _allAvalibleCount--;
+            if (_enemyCountNow <= _maxOneTimeEnemy)
+            {
+                _enemyCountNow++;
+                int i = Random.Range(0, 4);
+                Spawn(Random.Range(_siteCoordinate[i, 0], _siteCoordinate[i, 1]), Random.Range(_siteCoordinate[i, 2], _siteCoordinate[i, 3]));
+            }
+        }
+        else 
+        {
+            CancelInvoke(nameof(ChoiseSite));
         }
     }
 
     void Spawn(float x,float z) 
     {
-        I_danger++;
-        GameObject temp = Instantiate(Enemy,new Vector3(x,0,z),new Quaternion());
-        EnemyAI tempAi = temp.GetComponent<EnemyAI>();
+        Transform temp = ObjPool.Instance.SpawnObj(TypeObj.Enemy,new Vector3(x,0,z));
+        temp.gameObject.AddComponent(ChoiseBehaivor().GetType());
+        EnemyAIBase tempAi = temp.GetComponent<EnemyAIBase>();
         tempAi.GoTo = gameObject.transform;
-        if (I_danger >= 2 && Random.Range(0, 50) >= 25)
-        {
-            I_danger = 0;
-            tempAi.MoveSpeed = 2.2f;
-            tempAi.Dnager = true;
-        }
-        else 
-        {
-            tempAi.MoveSpeed = 1.5f;
-            tempAi.Dnager = false;
-
-        }
     }
+    EnemyAIBase ChoiseBehaivor()
+    {
+        int chBeh = Random.Range(0, _avalibBehavior.Count);
+        EnemyAIBase temp = _avalibBehavior[chBeh].Type;
+        _avalibBehavior[chBeh].MinusCount();
+        if (_avalibBehavior[chBeh].Count <= 0) 
+        {
+            _avalibBehavior.RemoveAt(chBeh);
+        }
+
+        return temp;
+    }
+
+    //Activator.CreateInstance slowed than this
+
 }

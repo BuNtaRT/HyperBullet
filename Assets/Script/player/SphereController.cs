@@ -6,11 +6,11 @@ public class SphereController : MonoBehaviour
 {
     //отвечает за хп и макс хп сферы, отключает или включает slowMotion у врагов, а так же отрисовывает свое хп на внутриигровом интерфейсе Road
 
-    float HpSphere = 5;
-    float HpCurretSphere;
-    public SpriteRenderer maskRoad;
-    bool timerActive = false;
-    List<EnemyAI> enemyList = new List<EnemyAI>();
+    float _HpSphere = 5;
+    float _HpCurretSphere;
+    bool  _timerActive = false;
+    public SpriteRenderer MaskRoad;
+    List<EnemyObj>         enemyList = new List<EnemyObj>();
 
     public static SphereController Sphere { get; private set; }
 
@@ -21,21 +21,20 @@ public class SphereController : MonoBehaviour
 
     private void Start()
     {
-        HpCurretSphere = HpSphere;
-        HpLine.init(maskRoad);
-
+        _HpCurretSphere = _HpSphere;
+        HpLine.init(MaskRoad);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "enemy") 
         {
-            EnemyAI temp = other.GetComponent<EnemyAI>();
-            if (!enemyList.Contains(temp))
+            EnemyObj temp = other.GetComponent<EnemyObj>();
+            if (!enemyList.Contains(temp) && temp!=null)
             {
-                AddEnemy(other.GetComponent<EnemyAI>());
+                AddEnemy(other.GetComponent<EnemyObj>());
                 temp.Attack();                      // запускаем анимацию аттаки
-                temp.SlowTimeEnable(timerActive);
+                temp.SlowTimeEnable(_timerActive);
                 enemyList.Add(temp);                // добавляем что бы деактивировать замедление когда хп пропадет 
             }
         }
@@ -43,32 +42,32 @@ public class SphereController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (timerActive && enemyList.Count >= 1)
+        if (_timerActive && enemyList.Count >= 1)
         {
             // тут тратим пока врагов не останется или пока щит не кончится 
             if (enemyList.Count == 0)
-                timerActive = false;
+                _timerActive = false;
 
-            HpCurretSphere -= 0.02f;
+            _HpCurretSphere -= 0.02f;
 
-            HpLine.DrowCallRoadHp(HpCurretSphere, HpSphere);
-            if (HpCurretSphere <= 0)
+            HpLine.DrawCallRoadHp(_HpCurretSphere, _HpSphere);
+            if (_HpCurretSphere <= 0)
             {
-                timerActive = false;
+                _timerActive = false;
                 Deactivate(true);
             }
         }
-        else if(!timerActive)
+        else if(!_timerActive)
         {
             // тут хилим щит
-            if (HpCurretSphere <= HpSphere)
+            if (_HpCurretSphere <= _HpSphere)
             {
-                HpCurretSphere += 0.01f;
-                HpLine.DrowCallRoadHp(HpCurretSphere,HpSphere);
+                _HpCurretSphere += 0.01f;
+                HpLine.DrawCallRoadHp(_HpCurretSphere,_HpSphere);
             }
-            if (!timerActive && HpCurretSphere >= HpSphere / 1.6)
+            if (!_timerActive && _HpCurretSphere >= _HpSphere / 1.6)
             {
-                timerActive = true;
+                _timerActive = true;
                 if (enemyList.Count >= 1)
                     Deactivate(false);
             }
@@ -83,20 +82,22 @@ public class SphereController : MonoBehaviour
     /// <param name="deactiv">false = активно замедление</param>
     void Deactivate(bool deactiv) 
     {
-        foreach (EnemyAI temp in enemyList) 
+        foreach (EnemyObj temp in enemyList) 
         {
             temp.SlowTimeEnable(!deactiv);
         }
     }
 
     // добавляем или удаляем Enemy вошедших в Sphere
-    void AddEnemy(EnemyAI enemy) 
+    void AddEnemy(EnemyObj enemy) 
     {
-        enemyList.Add(enemy);
+        if(!enemyList.Contains(enemy))
+            enemyList.Add(enemy);
     }
-    public void RemoveEnemy(EnemyAI enemy) 
+    // TODO: обьекты сразу не удаляются (переписать контроль используя Vector3.SqrtDistance )
+    public void RemoveEnemy(EnemyObj enemy) 
     {
-        enemyList.Remove(enemy);
+            enemyList.Remove(enemy);
     }
 
 

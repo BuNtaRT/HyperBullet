@@ -1,40 +1,40 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class PerkNI : MonoBehaviour
 {
-    [SerializeField] GameObject PerkGameObj;
-    [SerializeField] SpriteRenderer PerkIco;
-    GameObject perkObj;
-    public static PerkNI Instance;
+    [SerializeField] GameObject     _perkGameObj;
+    [SerializeField] SpriteRenderer _perkIco;
+    public static    PerkNI         Instance;
+    IPerk _currPerk;
 
 
     private void Awake()
     {
         Instance = this;
     }
+
+
     //управление отображения перка на дороге а так же его активация и деактивация
     void Show(PerkSO curretPerk) 
     {
         if (curretPerk == null)
-            PerkGameObj.SetActive(true);
-        PerkGameObj.GetComponent<Animation>().Play("ShowPerkOnRoad");
-        PerkIco.sprite = curretPerk.Ico;
-        PerkGameObj.SetActive(true);
-        //CurretScript = Instantiate(Resources.Load<GameObject>("Bonus/Perks/" + temp.NameScript));
+            _perkGameObj.SetActive(true);
+
+        _perkGameObj.GetComponent<Animation>().Play("ShowPerkOnRoad");
+        _perkIco.sprite = curretPerk.Ico;
+        _perkGameObj.SetActive(true);
     }
     void InitPerk(PerkSO curretPerk) 
     {
-        if (perkObj != null) 
-        {
-            perkObj.GetComponent<IPerk>().DisablePerk();
-            perkObj.GetComponent<IPerk>().DestroyPerk();
-        }
-        perkObj = Instantiate(Resources.Load<GameObject>(ResourcePath.pathToPerkObject + curretPerk.perkName.ToString()));
-
-        perkObj.GetComponent<IPerk>().InitPerk();
+        // создаем тип по имени из enum.perkName 
+        Debug.Log(curretPerk.perkName.ToString());
+        Type typeObj = Type.GetType(curretPerk.perkName.ToString());
+        _currPerk = (IPerk)Activator.CreateInstance(typeObj);
+        _currPerk.InitPerk();
     }
 
     public void ShowAndInitPerk(PerkSO curretPerk) 

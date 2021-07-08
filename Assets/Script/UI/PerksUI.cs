@@ -6,30 +6,27 @@ using UnityEngine.UI;
 public class PerksUI : MonoBehaviour
 {
     // тут UI взаимодействие игрока с перками 
-    public PerkSO PerkNow;
-
+    public PerkSO     PerkNow;
     #region UI
     public GameObject WindowPerk;
+
     [Header("Text")]
-    public Text NamePerk;
-    public Text DescrPerk;
+    public Text       NamePerk;
+    public Text       DescrPerk;
 
     [Header("Particle")]
     public GameObject Particle1;
     public GameObject Particle2;
+
     [Header("Animation")]
-    public Animator Card;
-    public Animator Buttons;
-    public Animator TextObj;
+    public Animator   Card;
+    public Animator   Buttons;
+    public Animator   TextObj;
 
     [Header("Card")]
-    public Image IcoPerk;
-    public Transform Borders;
+    public Image      IcoPerk;
+    public Transform  Borders;
     #endregion
-
-
-
-
 
 
     public void ChoisePerk(bool choise) 
@@ -43,13 +40,9 @@ public class PerksUI : MonoBehaviour
         {
             Card.Play("HideCard");
         }
-
         Buttons.Play("ButtonsHide");
         TextObj.Play("TextHide");
-
-
         StartCoroutine(ClosePerks());
-
     }
 
     IEnumerator ClosePerks()
@@ -59,16 +52,13 @@ public class PerksUI : MonoBehaviour
         WindowPerk.SetActive(false);
     }
 
-    
-
-
     // когда мы взяли перк с дороги (TapControll) то выводим о нем информацию 
     public void PerkShow()
     {
         string name;
         string desc;
 
-        if (PlayerPrefs.GetInt(PlayerPKey.Language) == (int)PlayerPKey.langKey.ru)
+        if (PlayerPrefs.GetInt(PlayerPKey.LANGUAGE) == (int)PlayerPKey.langKey.ru)
         {
             name = PerkNow.NameRU;
             desc = PerkNow.DescriptionRU;

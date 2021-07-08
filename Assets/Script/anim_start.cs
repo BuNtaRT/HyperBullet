@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class anim_start : MonoBehaviour
+public class Anim_start : MonoBehaviour
 {
-
+    // Don`t look this script please)), it`s very bad code, just this simple animation and camera set position on start game
     public Vector3 pos0;
     public Vector3 qua0;
     public Vector3 pos0to0;
@@ -26,10 +26,9 @@ public class anim_start : MonoBehaviour
     public GameObject Face;
     public GameObject Robot;
 
-    public Material matRobo;
+    public Material   matRobo;
     public GameObject Hero;
     public GameObject Sword;
-    public GameObject StartObject;
     public GameObject Sphere;
     public GameObject Sphere2D;
     public GameObject Pistol;
@@ -39,7 +38,6 @@ public class anim_start : MonoBehaviour
 
     public bool CoolStart = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         camera = GameObject.FindGameObjectWithTag("VirtualCamera").transform;
@@ -139,7 +137,7 @@ public class anim_start : MonoBehaviour
 
         //setCamera(PosFinal,RotFinal);
 
-        gameObject.GetComponent<ObjectControll>().BlackScOn();
+        BlackScreenUI.Instance.Enable();
         yield return new WaitForSeconds(0.05f);
         StartText.SetActive(true);
         StartText.GetComponent<Animation>().Play("Start");
@@ -151,7 +149,7 @@ public class anim_start : MonoBehaviour
         Sphere2D.SetActive(true);
         Pistol.GetComponent<Animator>().Play("PistolState");
         yield return new WaitForSeconds(0.15f);
-        gameObject.GetComponent<ObjectControll>().BlackScOff();
+        BlackScreenUI.Instance.Disable();
         Spawner.SetActive(true);
         yield return new WaitForSeconds(1f);
 

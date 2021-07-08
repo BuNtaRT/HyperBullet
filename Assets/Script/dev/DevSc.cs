@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DevSc : MonoBehaviour
 {
@@ -8,7 +6,7 @@ public class DevSc : MonoBehaviour
     PlayerPKey.langKey language;
     void Awake()
     {
-        PlayerPrefs.SetInt(PlayerPKey.Language, (int)language);
+        PlayerPrefs.SetInt(PlayerPKey.LANGUAGE, (int)language);
 
         PlayerPrefs.Save();
     }

@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class PlayAnim : MonoBehaviour
 {
-    [SerializeField] private string nameAnimation;
+    [SerializeField] string nameAnimation;
     Animator animator;
 
     private void Start()
     {
         animator = gameObject.GetComponent<Animator>();
         Debug.Log(gameObject.name);
-
     }
 
     private void OnValidate()

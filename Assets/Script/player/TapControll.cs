@@ -1,26 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class TapControll : MonoBehaviour
 {
-    public GameObject player;
-    public SpawnerEnemy spEnemy;
-
-
-
-    public Text Fails, GoodShoot;
-    int fail, GS;
-
-    public PerksUI perkCall;
+    public GameObject   Player;
+    public SpawnerEnemy SpawnerEnemy;
+    public PerksUI      PerkCall;
 
 
 
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -31,24 +21,17 @@ public class TapControll : MonoBehaviour
                 string tag = hit.transform.tag;
                 if (tag == "enemy")
                 {
-                    GS++;
-                    spEnemy.EnemyCount--;
-                    player.transform.LookAt(hit.transform);
-                    hit.transform.gameObject.GetComponent<EnemyAI>().Die();
+                    SpawnerEnemy.MinusEnemy();
+                    Player.transform.LookAt(hit.transform);
+                    hit.transform.gameObject.GetComponent<EnemyAIBase>().Die();
                     CameraShake.singl.Shake(1f);
 
                 }
                 else if (tag == "Perk")
                 {
-                    perkCall.PerkShow();
+                    PerkCall.PerkShow();
                     hit.transform.gameObject.SetActive(false);
                 }
-                else if (tag == "Finish")
-                {
-                    fail++;
-                }
-                Fails.text = fail.ToString();
-                GoodShoot.text = GS.ToString();
             }
         }
 

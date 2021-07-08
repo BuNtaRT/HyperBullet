@@ -2,42 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PerkItemOnRoad : MonoBehaviour
+public class PerkOnRoad : MonoBehaviour
 {
-    [SerializeField]
-    SpriteRenderer BgPerk;
-
+    [SerializeField] SpriteRenderer _bgPerk;
 
     void Start()
     {
-        BgPerk = transform.Find("bg").GetComponent<SpriteRenderer>();
-    }
-
-    void StartDestroy() 
-    {
-        StartCoroutine(AlphaNotification());
+        _bgPerk = transform.Find("bg").GetComponent<SpriteRenderer>();
     }
 
     private void OnEnable()
     {
-        StartCoroutine(AlphaNotification());
+        StartCoroutine(alphaNotification());
     }
 
-
-    IEnumerator AlphaNotification() 
+    IEnumerator alphaNotification() 
     {
         yield return new WaitForSeconds(1.2f);
         float time = 0.5f;
         float timeStep = 0f;
-        Color Start = BgPerk.color;
-        Color End = new Color(Start.r, Start.g, Start.b, 0);
+        Color start = _bgPerk.color;
+        Color end = new Color(start.r, start.g, start.b, 0);
 
         for (int i = 0; i <= 3; i++)
         {
             while (timeStep < 1.0f)
             {
                 timeStep += Time.deltaTime / time;
-                BgPerk.color = Color.Lerp(End, Start, Mathf.PingPong(timeStep, 1));
+                _bgPerk.color = Color.Lerp(end, start, Mathf.PingPong(timeStep, 1));
                 yield return null;
             }
             timeStep = 0;
@@ -45,7 +37,7 @@ public class PerkItemOnRoad : MonoBehaviour
         while (timeStep < 1.0f)
         {
             timeStep += Time.deltaTime / time;
-            BgPerk.color = Color.Lerp(Start, End, timeStep);
+            _bgPerk.color = Color.Lerp(start, end, timeStep);
             yield return null;
         }
 

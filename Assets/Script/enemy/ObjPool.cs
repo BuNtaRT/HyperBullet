@@ -6,6 +6,7 @@ public enum TypeObj : byte
 {
     Card,
     Enemy,
+    Bullet,
 }
 
 public class ObjPool : MonoBehaviour
@@ -38,10 +39,13 @@ public class ObjPool : MonoBehaviour
 
         foreach (ObjectsInfo temp in _objectsInfo)
         {
+            GameObject cellPool = new GameObject();
+            cellPool.name = temp.Prefab.name;
             Queue<GameObject> tempQueue = new Queue<GameObject>();
             for (int i = 0; i < temp.Count; i++)
             {
                 GameObject obj = Instantiate(temp.Prefab);
+                obj.transform.SetParent(cellPool.transform);
                 obj.SetActive(false);
                 tempQueue.Enqueue(obj);
             }

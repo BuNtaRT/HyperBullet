@@ -15,11 +15,11 @@ public class EnemyObj : MonoBehaviour
 
     EnemyAIBase    _currEnemyAI;
 
+    SpawnerEnemy _spawnerEnemy;
     public void ReInit(EnemyAIBase enemyAIBase) 
     {
         SphereController.Sphere.RemoveEnemy(this);
         _anim.Play("Run");
-        Destroy(_currEnemyAI);
         _anim.SetBool("Run", true);
         _currEnemyAI         = enemyAIBase;
         _boxCollider.enabled = true;
@@ -36,8 +36,10 @@ public class EnemyObj : MonoBehaviour
         _true_light.gameObject.SetActive(false);
     }
 
+
     private void Start()
     {
+        _spawnerEnemy = SpawnerEnemy.Instance;
         ShowCastScene(false);
     }
 
@@ -77,9 +79,10 @@ public class EnemyObj : MonoBehaviour
 
     public void Die()
     {
+        _spawnerEnemy.MinusEnemy();
         _boxCollider.enabled = false;
         SphereController.Sphere.RemoveEnemy(this);
-
+        Destroy(_currEnemyAI);
         // set reverse position
         Vector3 tempRot = transform.eulerAngles;
         transform.eulerAngles = new Vector3(tempRot.x, tempRot.y + 180, tempRot.z);

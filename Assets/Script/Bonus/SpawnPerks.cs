@@ -20,7 +20,7 @@ public class SpawnPerks : MonoBehaviour
     private void Awake()
     {
         _perks = new Dictionary<string, bool>();
-        Object[] tempPerk = Resources.LoadAll(ResourcePath.PATH_PERK_SO, typeof(PerkSO));
+        Object[] tempPerk = Resources.LoadAll(ResourcePath.PERK_SO, typeof(PerkSO));
         foreach (PerkSO temp in tempPerk)
         {
             if (AccessibilityPerk(temp.name))
@@ -71,7 +71,7 @@ public class SpawnPerks : MonoBehaviour
         }
 
         string randomPerkValue = sortedPerk[Random.Range(0,sortedPerk.Count)];
-        PerkSO newPerk = Resources.Load<PerkSO>(ResourcePath.PATH_PERK_SO + randomPerkValue);
+        PerkSO newPerk = Resources.Load<PerkSO>(ResourcePath.PERK_SO + randomPerkValue);
 
         // спавним собственно
         perkObject.transform.position = TargetCoordinate;

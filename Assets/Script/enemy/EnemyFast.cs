@@ -12,4 +12,6 @@ public class EnemyFast : EnemyAIBase
     {
         return new Color(1, 0, 0.390801f, 0.4f);
     }
+
+
 }

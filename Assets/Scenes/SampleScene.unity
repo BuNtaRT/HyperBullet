@@ -410,11 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 057edb17f64801c408300194a39f8146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _avalibBehavior:
-  - Count: 2
-    Type: {fileID: 1248731735}
-  - Count: 3
-    Type: {fileID: 597757000}
+  _avalibBehavior: []
   _maxOneTimeEnemy: 10
   _enemyCountNow: 0
 --- !u!4 &54628986
@@ -3359,50 +3355,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a005529f547b6a4a82ed1eae7c5b603, type: 3}
---- !u!1 &597756999
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 597757001}
-  - component: {fileID: 597757000}
-  m_Layer: 0
-  m_Name: FastEnemy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &597757000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 597756999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c2b46377d7f2564b91ff156f34f379d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GoTo: {fileID: 0}
---- !u!4 &597757001
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 597756999}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.955246, y: -3.3690538, z: 2.1673195}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 24
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &610876727
 GameObject:
   m_ObjectHideFlags: 0
@@ -6248,50 +6200,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &1248731734
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1248731736}
-  - component: {fileID: 1248731735}
-  m_Layer: 0
-  m_Name: SimpleEnemy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1248731735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248731734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 828346bbabf29d540b9f48333d76b0e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GoTo: {fileID: 0}
---- !u!4 &1248731736
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248731734}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.955246, y: -3.3690538, z: 2.1673195}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 23
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1253501661
 GameObject:
   m_ObjectHideFlags: 0
@@ -14894,6 +14802,7 @@ GameObject:
   - component: {fileID: 1892904448}
   - component: {fileID: 1892904447}
   - component: {fileID: 1892904450}
+  - component: {fileID: 1892904449}
   m_Layer: 0
   m_Name: '[Scripts]'
   m_TagString: Untagged
@@ -14950,6 +14859,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1892904449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892904446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80630738c673ad64e9419de0a1f4f40b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnerEnemy: {fileID: 54628985}
 --- !u!114 &1892904450
 MonoBehaviour:
   m_ObjectHideFlags: 0

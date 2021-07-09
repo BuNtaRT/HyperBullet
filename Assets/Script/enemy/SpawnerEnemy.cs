@@ -8,14 +8,10 @@ using Random = UnityEngine.Random;
 [Serializable]
 class EnemyBehaviorCount 
 {
-    int count;
     public int Count;
     public EnemyAIBase Type;
-    public void MinusCount()
-    {
-        Debug.Log("minus Count = " + Count + "  type "+ Type.GetType());
-        Count-=1;
-    }
+    public void MinusCount()=>Count--;
+
 }
 
 
@@ -34,7 +30,17 @@ public class SpawnerEnemy : MonoBehaviour
     //public GameObject Enemy;
     int _allAvalibleCount;
 
-    private void Start()
+    public static SpawnerEnemy Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Debug.LogError("Instance obj over 1");
+    }
+
+    void Start()
     {
         foreach (EnemyBehaviorCount temp in _avalibBehavior) 
         {
@@ -45,13 +51,19 @@ public class SpawnerEnemy : MonoBehaviour
 
     public void MinusEnemy() => _enemyCountNow--;
 
+    public void AddNewBehaivor(EnemyAIBase enemyAI, int count) 
+    {
+        EnemyBehaviorCount temp = new EnemyBehaviorCount { Type = enemyAI, Count = count };
+        _avalibBehavior.Add(temp);
+    }
+
     void ChoiseSite() 
     {
         if (_allAvalibleCount > 0)
         {
-            _allAvalibleCount--;
             if (_enemyCountNow <= _maxOneTimeEnemy)
             {
+               
                 _enemyCountNow++;
                 int i = Random.Range(0, 4);
                 Spawn(Random.Range(_siteCoordinate[i, 0], _siteCoordinate[i, 1]), Random.Range(_siteCoordinate[i, 2], _siteCoordinate[i, 3]));
@@ -65,17 +77,21 @@ public class SpawnerEnemy : MonoBehaviour
 
     void Spawn(float x,float z) 
     {
+
         Transform temp = ObjPool.Instance.SpawnObj(TypeObj.Enemy,new Vector3(x,0,z));
-        temp.gameObject.AddComponent(ChoiseBehaivor().GetType());
+        EnemyAIBase tempEaiai = ChoiseBehaivor();
+        temp.gameObject.AddComponent(tempEaiai.GetType());
         EnemyAIBase tempAi = temp.GetComponent<EnemyAIBase>();
         tempAi.GoTo = gameObject.transform;
     }
+    //Activator.CreateInstance slowed than this
     EnemyAIBase ChoiseBehaivor()
     {
+        _allAvalibleCount--;
         int chBeh = Random.Range(0, _avalibBehavior.Count);
         EnemyAIBase temp = _avalibBehavior[chBeh].Type;
         _avalibBehavior[chBeh].MinusCount();
-        if (_avalibBehavior[chBeh].Count <= 0) 
+        if (_avalibBehavior[chBeh].Count == 0) 
         {
             _avalibBehavior.RemoveAt(chBeh);
         }
@@ -83,6 +99,5 @@ public class SpawnerEnemy : MonoBehaviour
         return temp;
     }
 
-    //Activator.CreateInstance slowed than this
 
 }

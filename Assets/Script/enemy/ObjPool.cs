@@ -39,6 +39,7 @@ public class ObjPool : MonoBehaviour
 
         foreach (ObjectsInfo temp in _objectsInfo)
         {
+            
             GameObject cellPool = new GameObject();
             cellPool.name = temp.Prefab.name;
             Queue<GameObject> tempQueue = new Queue<GameObject>();
@@ -49,17 +50,30 @@ public class ObjPool : MonoBehaviour
                 obj.SetActive(false);
                 tempQueue.Enqueue(obj);
             }
+            
             poolDictionary.Add(temp.Type, tempQueue);
         }
     }
 
     public Transform SpawnObj(TypeObj type, Vector3 position) 
     {
-        GameObject temp = poolDictionary[type].Dequeue();
-        temp.SetActive(true);
-        temp.transform.position = position;
-        poolDictionary[type].Enqueue(temp);
-        return temp.transform;
+        if (poolDictionary[type].Count != 0)
+        {
+            Debug.Log(poolDictionary[type].Count + " as [" + type + "]" );
+            GameObject temp = poolDictionary[type].Dequeue();
+            temp.SetActive(true);
+            temp.transform.position = position;
+            return temp.transform;
+        }
+        else 
+        {
+            return null;
+        }
+    }
+    public void Destroy(TypeObj type, GameObject obj) 
+    {
+        obj.SetActive(false);
+        poolDictionary[type].Enqueue(obj);
     }
 
     

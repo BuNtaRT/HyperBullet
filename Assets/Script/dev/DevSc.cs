@@ -7,7 +7,7 @@ public class DevSc : MonoBehaviour
     void Awake()
     {
         PlayerPrefs.SetInt(PlayerPKey.LANGUAGE, (int)language);
-
+        PlayerPrefs.SetFloat(PlayerPKey.SPEED_UP, 0);
         PlayerPrefs.Save();
     }
 

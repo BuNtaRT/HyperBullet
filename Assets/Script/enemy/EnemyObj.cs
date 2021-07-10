@@ -12,18 +12,20 @@ public class EnemyObj : MonoBehaviour
     GameObject     _helmet;        // For CastScene
     Light          _true_light;
     SpriteRenderer _fake_light;
+    GameObject     _lod_4;
 
     EnemyAIBase    _currEnemyAI;
 
     SpawnerEnemy _spawnerEnemy;
     public void ReInit(EnemyAIBase enemyAIBase) 
     {
-        SphereController.Sphere.RemoveEnemy(this);
+        //Destroy(_currEnemyAI);
         _anim.Play("Run");
         _anim.SetBool("Run", true);
         _currEnemyAI         = enemyAIBase;
         _boxCollider.enabled = true;
         SpeedAnim = 1;
+        ChangeLayer((int)ObjLayer.ProrLight);
     }
 
     private void Awake()
@@ -31,6 +33,7 @@ public class EnemyObj : MonoBehaviour
         _true_light  = transform.Find("Light").GetComponent<Light>();
         _fake_light  = transform.Find("FackeLight").GetComponent<SpriteRenderer>();
         _helmet      = transform.Find("Face.lod2").gameObject;
+        _lod_4       = transform.Find("BH_2_lod4").gameObject;
         _boxCollider = gameObject.GetComponent<BoxCollider>();
         _anim        = gameObject.GetComponent<Animator>();
         _true_light.gameObject.SetActive(false);
@@ -81,8 +84,11 @@ public class EnemyObj : MonoBehaviour
     {
         _spawnerEnemy.MinusEnemy();
         _boxCollider.enabled = false;
-        SphereController.Sphere.RemoveEnemy(this);
-        Destroy(_currEnemyAI);
+        //Destroy(_currEnemyAI);
+        //if (_currEnemyAI != null) 
+        //{
+        //    Debug.LogError(_currEnemyAI + "Not destroy");
+        //}
         // set reverse position
         Vector3 tempRot = transform.eulerAngles;
         transform.eulerAngles = new Vector3(tempRot.x, tempRot.y + 180, tempRot.z);
@@ -100,11 +106,13 @@ public class EnemyObj : MonoBehaviour
         Color lightColor = _fake_light.color;
         _fake_light.DOColor(new Color(lightColor.r, lightColor.g, lightColor.b, 0), 1);
         StartCoroutine(SetActiveFalse());
+        SphereController.Instance.RemoveEnemy(gameObject.GetComponent<EnemyObj>());
+        Destroy(_currEnemyAI);
     }
     IEnumerator SetActiveFalse()
     {
         yield return new WaitForSeconds(1.1f);
-        gameObject.SetActive(false);
+        ObjPool.Instance.Destroy(TypeObj.Enemy,gameObject);
     }
     public void Attack()
     {
@@ -119,6 +127,7 @@ public class EnemyObj : MonoBehaviour
     {
         if (enable)
         {
+            _currEnemyAI.InSphere = true;
             SpeedAnim = 4;
             _anim.SetFloat("SpeedAnim", 0.25f);
             SlowSpeedModify(4);
@@ -129,6 +138,19 @@ public class EnemyObj : MonoBehaviour
             _anim.SetFloat("SpeedAnim", 1);
             SlowSpeedModify(0);
         }
+        
+    }
 
+    public void InSphere() 
+    {
+        _currEnemyAI.InSphere = true; // Disable Dodge in enemy smart
+    }
+
+    // for Shadowenemy 
+    public void ChangeLayer(int layer) 
+    {
+        _lod_4.layer = layer;
+        _fake_light.gameObject.layer = layer;
+        _helmet.layer = layer;
     }
 }

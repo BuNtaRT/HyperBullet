@@ -32,7 +32,8 @@ public class LoadLvl : MonoBehaviour
             }
 
             tempEnemy.Count =  XmlConvert.ToInt32(temp.SelectSingleNode("count").InnerText);
-            _enemyList.Add(tempEnemy);
+            if(tempEnemy.Count!=0)
+                _enemyList.Add(tempEnemy);
         }
         SendToSpawner();
     }

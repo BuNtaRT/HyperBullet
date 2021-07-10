@@ -6,11 +6,12 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     sbyte _damage = 2;
-    byte hp = 1;
+    sbyte hp = 1;
     Sequence _seqenceMove;
     float _speed = 1;
     public void Init(Vector3 end) 
     {
+        die = false;
         _seqenceMove.Append(transform.DOMove(end, _speed).OnComplete(() => { Die(); }));
     }
 
@@ -33,10 +34,15 @@ public class Bullet : MonoBehaviour
             Die();
         }
     }
+    bool die = false;
     void Die() 
     {
-        _seqenceMove.Kill();
-        gameObject.SetActive(false);
+        if (!die)
+        {
+            die = true;
+            _seqenceMove.Kill();
+            ObjPool.Instance.Destroy(TypeObj.Bullet, gameObject);
+        }
     }
 
 }

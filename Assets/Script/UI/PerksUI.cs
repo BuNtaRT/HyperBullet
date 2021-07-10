@@ -7,6 +7,7 @@ public class PerksUI : MonoBehaviour
 {
     // тут UI взаимодействие игрока с перками 
     public PerkSO     PerkNow;
+    TapControll _tapControll;
     #region UI
     public GameObject WindowPerk;
 
@@ -28,6 +29,10 @@ public class PerksUI : MonoBehaviour
     public Transform  Borders;
     #endregion
 
+    private void Awake()
+    {
+        _tapControll = Camera.main.GetComponent<TapControll>();
+    }
 
     public void ChoisePerk(bool choise) 
     {
@@ -49,12 +54,14 @@ public class PerksUI : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.9f);
         Time.timeScale = 1;
+        _tapControll.Disable(false);
         WindowPerk.SetActive(false);
     }
 
     // когда мы взяли перк с дороги (TapControll) то выводим о нем информацию 
     public void PerkShow()
     {
+        _tapControll.Disable(true);
         string name;
         string desc;
 

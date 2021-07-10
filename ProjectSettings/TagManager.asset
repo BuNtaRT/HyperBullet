@@ -8,6 +8,8 @@ TagManager:
   - RoboLight
   - VirtualCamera
   - Perk
+  - Bullet
+  - Sphere
   layers:
   - Default
   - TransparentFX

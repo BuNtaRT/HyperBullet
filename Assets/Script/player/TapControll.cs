@@ -1,15 +1,15 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 public class TapControll : MonoBehaviour
 {
     public GameObject   Player;
     public SpawnerEnemy SpawnerEnemy;
     public PerksUI      PerkCall;
-
-    bool an = false;
+    bool                _disable     = false;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !_disable)
         {
             
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -17,16 +17,6 @@ public class TapControll : MonoBehaviour
             if (Physics.Raycast(ray.origin, ray.direction, out hit))
             {
                 string tag = hit.transform.tag;
-                //if (tag == "enemy")
-                //{
-                //    //SpawnerEnemy.MinusEnemy();
-                //    //Player.transform.LookAt(hit.transform);
-                //    Debug.Log(hit.transform.position);
-                //    //Shoot(hit.transform);
-                //    //hit.transform.gameObject.GetComponent<EnemyAIBase>().Die();
-                //    //CameraShake.singl.Shake(1f);
-
-                //}
                 if (tag == "Perk")
                 {
                     PerkCall.PerkShow();
@@ -41,14 +31,18 @@ public class TapControll : MonoBehaviour
 
         void Shoot(Vector3 positionShoot)
         {
-            Vector3 cleanCoordinate = new Vector3(positionShoot.x, 0, positionShoot.z);
-            CameraShake.singl.Shake(1f);
-            Player.transform.LookAt(cleanCoordinate);
             Transform bullet = ObjPool.Instance.SpawnObj(TypeObj.Bullet, Vector3.up);
+            if (bullet != null)
+            {
+                Vector3 cleanCoordinate = new Vector3(positionShoot.x, 0, positionShoot.z);
+                CameraShake.Instance.Shake(1f);
+                Player.transform.DOLookAt(cleanCoordinate, 0.15f);
 
-            cleanCoordinate = cleanCoordinate.normalized * 20;
-            cleanCoordinate = new Vector3(cleanCoordinate.x, 1, cleanCoordinate.z);
-            bullet.GetComponent<Bullet>().Init(cleanCoordinate);
+
+                cleanCoordinate = cleanCoordinate.normalized * 20;
+                cleanCoordinate = new Vector3(cleanCoordinate.x, 1, cleanCoordinate.z);
+                bullet.GetComponent<Bullet>().Init(cleanCoordinate);
+            }
         }
 
         //if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began) 
@@ -81,5 +75,10 @@ public class TapControll : MonoBehaviour
         //        GoodShoot.text = GS.ToString();
         //    }
         //}
+    }
+
+    public void Disable(bool dis)
+    {
+        _disable = dis;
     }
 }

@@ -1,11 +1,21 @@
 <enemys>
   <enemy type="EnemySimple">
-    <count>1</count>
+    <count>0</count>
   </enemy>
   <enemy type="EnemyFast">
-    <count>1</count>
+    <count>0</count>
   </enemy>
   <enemy type="EnemySmart">
-    <count>20</count>
+    <count>0</count>
+  </enemy>
+  <enemy type="EnemyHeavy">
+    <count>0</count>
+  </enemy>
+  <enemy type="ShadowEnemy">
+    <count>0</count>
+  </enemy>
+  <enemy type="EnemyLiar">
+    <count>10</count>
   </enemy>
 </enemys>
+

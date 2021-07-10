@@ -4,23 +4,22 @@ using UnityEngine;
 
 public class EnemySmart : EnemyAIBase
 {
+    float _angleSave;
 
     protected override Color SetColor()
     {
-        return new Color(1,0.69f,0,0.4f);
-        
+        return ColorEnemy.Yellow;
     }
+
     protected override float SetSpeed()
     {
-        return 1;
+        return 1.5f + PlayerPrefs.GetFloat(PlayerPKey.SPEED_UP);
     }
 
     protected override bool Dodge()
     {
-        if (Random.Range(0, 101) >= 0)
+        if (Random.Range(0, 101) >= 0 && !InSphere)
         {
-            Debug.Log("DODGE");
-
             InitDodge();
             return true;
         }
@@ -30,26 +29,25 @@ public class EnemySmart : EnemyAIBase
         }
     }
 
+    protected override void LateInit()
+    {
+        SetRot(Random.Range(0,361));
+    }
+
     void InitDodge()
     {
-        //float[] degree = new float[4] { -0.15f,0.25f, 0.15f, -0.25f };
-        //float ran = degree[Random.Range(0, degree.Length)];
-        Vector3 pos = gameObject.transform.position;
-        //float radius = Vector3.Distance(gameObject.transform.position,GoTo.position)+0.1f;
+        if((Random.Range(0,51) >= 25 || _angleSave <=21) && _angleSave <= 339)
+            SetRot(_angleSave + Random.Range(10, 20));
+        else
+            SetRot(_angleSave + Random.Range(-10,-20));
+        RePosition();
+    }
 
-
-        //float rand = Random.Range(0, 0.1f);
-
-
-        //float xA = Vector3.Angle(pos.normalized.x);
-        //float zA = Mathf.Cos(pos.normalized.z);
-        //float xN = pos.normalized.x;
-        //float zZ = pos.normalized.z;
-
-        //Vector3 newPos = new Vector3(( x +rand) * radius, pos.y,(z + rand) * radius);
-        //Vector3 newPos = new Vector3(Mathf.Sin(pos.normalized.x + ran) * radius, pos.y,Mathf.Cos(pos.normalized.z) * radius);
-
-
-        //RePosition(newPos);
+    void SetRot(float angle) 
+    {
+        _angleSave = angle;
+        float radius = Vector3.Distance(GoTo.position, transform.position);
+        Vector3 direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * (angle)) * radius, 0, Mathf.Cos(Mathf.Deg2Rad * (angle)) * radius);
+        transform.position = direction;
     }
 }

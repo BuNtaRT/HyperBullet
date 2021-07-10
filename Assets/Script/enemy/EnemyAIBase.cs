@@ -9,23 +9,30 @@ public class EnemyAIBase : MonoBehaviour
 
     Vector3 _enemySpawnPosition;
 
-    EnemyObj enemyObj;
+    protected EnemyObj _enemyObj;
+
+    public bool InSphere = false;
 
     sbyte _hp = 2;
 
     void Start()
     {
-        enemyObj = gameObject.GetComponent<EnemyObj>();
-        enemyObj.ReInit(this);
-        enemyObj.SetColor(SetColor());
-        enemyObj.SetSpeed(SetSpeed());
+        _enemyObj = gameObject.GetComponent<EnemyObj>();
+        _enemyObj.ReInit(this);
+        _enemyObj.SetColor(SetColor());
+        _enemyObj.SetSpeed(SetSpeed());
         _hp = SetHp();
 
+        LateInit();
         _enemySpawnPosition = gameObject.transform.position;
         LookAt();
 
+        LateInit();
         StartCoroutine(Go());
     }
+
+    // init inheritance 
+    protected virtual void LateInit() {}
 
     protected virtual Color SetColor() { return new Color(0, 0, 0, 1); }
 
@@ -45,36 +52,46 @@ public class EnemyAIBase : MonoBehaviour
 
     protected virtual void MinusHp(sbyte inputDamage) 
     {
-        if (inputDamage >= _hp)
+        _hp  = (sbyte)(_hp - inputDamage);
+        if (_hp <=0)
+        {
             Die();
-        else
-            _hp = (sbyte)(_hp - inputDamage);
+        }
     }
 
     public void ShowCastScene(bool cast)
     {
-        enemyObj.ShowCastScene(cast);
+        _enemyObj.ShowCastScene(cast);
     }
     public void Die()
     {
         StopAllCoroutines();
-        enemyObj.Die();
+        _enemyObj.Die();
+        //try
+        //{
+        //    DestroyImmediate(this);
+        //    Debug.LogWarning("Destroy");
+        //}
+        //catch (System.Exception e)
+        //{
+
+        //    Debug.LogError("Not del  " + e);
+        //}
     }
     public void Attack() 
     {
-        enemyObj.Attack();
+        _enemyObj.Attack();
     }
 
     public void SlowTimeEnable(bool enable) 
     {
-        enemyObj.SlowTimeEnable(enable);
+        _enemyObj.SlowTimeEnable(enable);
     }
 
     void OnTriggerEnter(Collider other) 
     {
-        if (other.CompareTag("Bullet")) 
+        if (other.CompareTag("Bullet"))
         {
-            Debug.Log("bullet!!");
             // уклонение используется в EnemySmart
             if (!Dodge())
             {
@@ -87,25 +104,23 @@ public class EnemyAIBase : MonoBehaviour
     IEnumerator Go()
     {
         float distance = Vector3.Distance(_enemySpawnPosition, GoTo.position);
-        float time = distance / enemyObj.MoveSpeed;
+        float time = distance / _enemyObj.MoveSpeed;
 
-        while (_ienumProgress < 1.0f)
+        float timeSteap = 0f;
+        while (timeSteap < 1.0f)
         {
-            _ienumProgress += Time.deltaTime / time / enemyObj.SpeedAnim;
-            gameObject.transform.position = Vector3.Lerp(_enemySpawnPosition, GoTo.position, _ienumProgress);
+            timeSteap += Time.deltaTime / time / _enemyObj.SpeedAnim;
+            gameObject.transform.position = Vector3.Lerp(_enemySpawnPosition, GoTo.position, timeSteap);
             yield return null;
         }
         yield return new WaitForSeconds(0);
     }
 
-    float _ienumProgress = 0;
-    protected void RePosition(Vector3 newPosition)
+    protected void RePosition()
     {
         StopAllCoroutines();
-        transform.position = newPosition;
-        _ienumProgress =0;
-        _enemySpawnPosition = newPosition;
-        StartCoroutine(Go());
+        _enemySpawnPosition = transform.position;
         LookAt();
+        StartCoroutine(Go());
     }
 }

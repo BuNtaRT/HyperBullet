@@ -14,10 +14,9 @@ class EnemyBehaviorCount
 
 }
 
-
-
 public class SpawnerEnemy : MonoBehaviour
 {
+
     [SerializeField] List<EnemyBehaviorCount> _avalibBehavior = new List<EnemyBehaviorCount>();
     [SerializeField] int           _maxOneTimeEnemy = 10;
     [SerializeField] int           _enemyCountNow   = 0;
@@ -27,9 +26,8 @@ public class SpawnerEnemy : MonoBehaviour
                                                  {-15f,-16f, 10f,-10.5f  },      //Down
                                                  {-15f, 16f, 10f, 10.5f  },      //Left
                                                  {-15f, 16f,-10f,-10.5f  } };    //Right
-    //public GameObject Enemy;
-    int _allAvalibleCount;
-
+    int       _allAvalibleCount;
+    Transform _gotoEnemy;
     public static SpawnerEnemy Instance { get; private set; }
 
     private void Awake()
@@ -38,6 +36,7 @@ public class SpawnerEnemy : MonoBehaviour
             Instance = this;
         else
             Debug.LogError("Instance obj over 1");
+        _gotoEnemy = transform;
     }
 
     void Start()
@@ -63,7 +62,6 @@ public class SpawnerEnemy : MonoBehaviour
         {
             if (_enemyCountNow <= _maxOneTimeEnemy)
             {
-               
                 _enemyCountNow++;
                 int i = Random.Range(0, 4);
                 Spawn(Random.Range(_siteCoordinate[i, 0], _siteCoordinate[i, 1]), Random.Range(_siteCoordinate[i, 2], _siteCoordinate[i, 3]));
@@ -77,27 +75,37 @@ public class SpawnerEnemy : MonoBehaviour
 
     void Spawn(float x,float z) 
     {
-
         Transform temp = ObjPool.Instance.SpawnObj(TypeObj.Enemy,new Vector3(x,0,z));
-        EnemyAIBase tempEaiai = ChoiseBehaivor();
-        temp.gameObject.AddComponent(tempEaiai.GetType());
-        EnemyAIBase tempAi = temp.GetComponent<EnemyAIBase>();
-        tempAi.GoTo = gameObject.transform;
+        if (temp != null)
+        {
+            temp.gameObject.AddComponent(ChoiseBehaivor().GetType());
+            EnemyAIBase tempAi = temp.GetComponent<EnemyAIBase>();
+            tempAi.GoTo = _gotoEnemy;
+        }
     }
-    //Activator.CreateInstance slowed than this
+
     EnemyAIBase ChoiseBehaivor()
     {
         _allAvalibleCount--;
         int chBeh = Random.Range(0, _avalibBehavior.Count);
         EnemyAIBase temp = _avalibBehavior[chBeh].Type;
         _avalibBehavior[chBeh].MinusCount();
-        if (_avalibBehavior[chBeh].Count == 0) 
+        if (_avalibBehavior[chBeh].Count == 0)
         {
             _avalibBehavior.RemoveAt(chBeh);
         }
-
         return temp;
     }
 
+    IEnumerator SetAI(Transform enemy,EnemyAIBase behaivor,Transform Goto) 
+    {
+        //yield return null;
+        //Destroy(enemy.GetComponent<EnemyAIBase>());
+        //yield return null;
+        enemy.gameObject.AddComponent(behaivor.GetType());
+        EnemyAIBase tempAi = enemy.GetComponent<EnemyAIBase>();
+        tempAi.GoTo = Goto;
+        yield return null;
 
+    }
 }

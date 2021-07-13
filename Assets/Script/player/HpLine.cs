@@ -24,4 +24,12 @@ public static class HpLine
             _maskRoad.color = _roadColor;
         }
     }
+
+    public static Color ChangeColor(Color newColor) 
+    {
+        Color temp  = _roadColor;
+        _roadColor = new Color(newColor.r, newColor.g, newColor.b, _roadColor.a); ;
+        _maskRoad.color = _roadColor;
+        return temp;
+    }
 }

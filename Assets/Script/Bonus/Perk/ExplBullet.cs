@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ricochet_Bullet : MonoBehaviour, IPerk
-{  
+public class ExplBullet : MonoBehaviour, IPerk
+{
     public void InitPerk()
     {
-        BulletSource.SetColor(ColorToGradient.Convert(new Color(0.1650943f, 1f, 0.3047963f)));
-        BulletSource.SetModifyBullet("Ricochet");
+        BulletSource.SetModifyBullet("Explosion");
+        BulletSource.SetColor(ColorToGradient.Convert(new Color(0.95f,0,1)));
     }
     public void DestroyPerk()
     {

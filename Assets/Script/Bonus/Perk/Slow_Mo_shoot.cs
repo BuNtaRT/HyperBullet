@@ -13,6 +13,4 @@ public class Slow_Mo_shoot : MonoBehaviour, IPerk
         Shoot.Instance.ClearModified();
         Destroy(gameObject);
     }
-
-
 }

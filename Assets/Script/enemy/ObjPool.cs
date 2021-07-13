@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public enum TypeObj : byte
 {
     Card,
     Enemy,
     Bullet,
+    ExplosionFromBullet,
 }
 
 public class ObjPool : MonoBehaviour
 {
+    GameObject _overSpawnCell;
     public static ObjPool Instance { get; private set; }
 
     void Awake()
@@ -35,11 +38,12 @@ public class ObjPool : MonoBehaviour
 
     void Start()
     {
+        _overSpawnCell = new GameObject();
+        _overSpawnCell.name = "OverSpawnCell";
         poolDictionary = new Dictionary<TypeObj, Queue<GameObject>>();
 
         foreach (ObjectsInfo temp in _objectsInfo)
         {
-            
             GameObject cellPool = new GameObject();
             cellPool.name = temp.Prefab.name;
             Queue<GameObject> tempQueue = new Queue<GameObject>();
@@ -50,11 +54,9 @@ public class ObjPool : MonoBehaviour
                 obj.SetActive(false);
                 tempQueue.Enqueue(obj);
             }
-            
             poolDictionary.Add(temp.Type, tempQueue);
         }
     }
-
     public Transform SpawnObj(TypeObj type, Vector3 position) 
     {
         if (poolDictionary[type].Count != 0)
@@ -66,7 +68,11 @@ public class ObjPool : MonoBehaviour
         }
         else 
         {
-            return null;
+            var temp = _objectsInfo.FirstOrDefault(o => (o.Type == type)).Prefab;
+            GameObject tempObj = Instantiate(temp);
+            tempObj.transform.SetParent(_overSpawnCell.transform);
+            tempObj.transform.position = position;
+            return tempObj.transform;
         }
     }
     public void Destroy(TypeObj type, GameObject obj) 

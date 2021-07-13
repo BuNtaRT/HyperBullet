@@ -8,6 +8,7 @@ public class SphereController : MonoBehaviour
     float _hpSphere = 5;
     float _hpCurretSphere;
     bool  _timerActive = false;
+    float _powerHealing = 0.01f;
     public SpriteRenderer  MaskRoad;
     [SerializeField] SpriteRenderer  SphereSp;
     [SerializeField] SpriteRenderer  LightColor;
@@ -67,7 +68,7 @@ public class SphereController : MonoBehaviour
             // тут хилим щит
             if (_hpCurretSphere <= _hpSphere)
             {
-                _hpCurretSphere += 0.01f;
+                _hpCurretSphere += _powerHealing;
                 HpLine.DrawCallRoadHp(_hpCurretSphere, _hpSphere);
             }
             if (!_timerActive && _hpCurretSphere >= _hpSphere / 1.6)
@@ -81,16 +82,16 @@ public class SphereController : MonoBehaviour
         {
             if (_hpCurretSphere <= _hpSphere)
             {
-                _hpCurretSphere += 0.01f;
+                _hpCurretSphere += _powerHealing;
                 HpLine.DrawCallRoadHp(_hpCurretSphere, _hpSphere);
             }
         }
     }
 
     /// <summary>
-    /// All hp sphere * x
+    /// All hp sphere boost
     /// </summary>
-    /// <param name="x"> -1--0--+1 value percent</param>
+    /// <param name="x"> -1:1 value percent</param>
     public void SetXFactor(float x) 
     {
         _hpSphere = _hpSphere + _hpSphere * x;
@@ -103,6 +104,15 @@ public class SphereController : MonoBehaviour
         SphereSp.color = newColor;
         LightColor.color = newColor;
         return tempPast;
+    }
+
+    /// <summary>
+    /// Speed heal shealt
+    /// </summary>
+    /// <param name="x"> -1:1 percent boost</param>
+    public void SetPowerHealing(float x) 
+    {
+        _powerHealing = _powerHealing + (_powerHealing * x);
     }
 
     /// <summary>

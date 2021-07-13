@@ -30,8 +30,14 @@ public enum PerkName : byte
     Bursting_Bullet,
     Ricochet_Bullet,
     Slow_Mo_shoot,
-
-
+    SuperPower,
+    SuperDiscontr,
+    ExplBullet,
+    Clone,
+    Healt,
+    SuperPowerShealt,
+    EmiBullet,
+    TwoXDamage,
 }
 
 public enum PerkRarity : byte

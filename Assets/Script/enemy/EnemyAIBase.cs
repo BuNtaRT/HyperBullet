@@ -90,6 +90,7 @@ public class EnemyAIBase : MonoBehaviour
 
     void OnTriggerEnter(Collider other) 
     {
+
         if (other.CompareTag("Bullet"))
         {
             // уклонение используется в EnemySmart
@@ -98,10 +99,17 @@ public class EnemyAIBase : MonoBehaviour
                 var tuple = other.GetComponent<Bullet>().CollisionEnemy();
                 sbyte damage = tuple.Item1;
                 MinusHp(damage);
-                if (tuple.Item2 != "" && _hp >= 0) 
+                if (tuple.Item2 != "" && _hp >= 0)
                 {
-                    Invoke(tuple.Item2,0);
+                    Invoke(tuple.Item2, 0);
                 }
+            }
+        }
+        else if (other.CompareTag("ExplBullet")) 
+        {
+            if (!Dodge())
+            {
+                MinusHp(2);
             }
         }
     }

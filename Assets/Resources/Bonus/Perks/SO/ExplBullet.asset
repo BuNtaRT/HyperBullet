@@ -10,21 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af3474063a8534d41b522e76356f693c, type: 3}
-  m_Name: Ricochet
+  m_Name: ExplBullet
   m_EditorClassIdentifier: 
-  rarity: 1
-  NameRU: "\u041F\u0443\u043B\u044F \u0440\u0438\u043A\u043E\u0448\u0435\u0442"
-  NameEU: Ricochet bullet
-  DescriptionRU: "\u041C\u0435\u043D\u044F\u0435\u0442 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435
-    \u043F\u0440\u0438 \u043F\u043E\u043F\u0430\u0434\u0430\u043D\u0438\u0438 \u0432
-    \u0446\u0435\u043B\u044C"
-  DescriptionEU: Changes direction when hitting the target
-  Ico: {fileID: 21300000, guid: 479df0eaf58356647bafb2d7a5f4af88, type: 3}
-  perkName: 6
+  rarity: 0
+  NameRU: 
+  NameEU: 
+  DescriptionRU: 
+  DescriptionEU: 
+  Ico: {fileID: 0}
+  perkName: 0
   GradientParticle:
     serializedVersion: 2
-    key0: {r: 0.34100214, g: 0.9150943, b: 0.3848903, a: 0.58431375}
-    key1: {r: 0.4764151, g: 1, b: 0.86743003, a: 0.84313726}
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -32,7 +30,7 @@ MonoBehaviour:
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 38357
+    ctime1: 65535
     ctime2: 0
     ctime3: 0
     ctime4: 0
@@ -40,8 +38,8 @@ MonoBehaviour:
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 23708
-    atime2: 65535
+    atime1: 65535
+    atime2: 0
     atime3: 0
     atime4: 0
     atime5: 0
@@ -49,5 +47,5 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_NumColorKeys: 2
-    m_NumAlphaKeys: 3
-  MainColor: {r: 0.23028658, g: 0.6509434, b: 0.44860217, a: 1}
+    m_NumAlphaKeys: 2
+  MainColor: {r: 0, g: 0, b: 0, a: 0}

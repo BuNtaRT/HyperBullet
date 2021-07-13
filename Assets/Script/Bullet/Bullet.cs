@@ -90,6 +90,20 @@ public class Bullet : MonoBehaviour
         SpawnNewBull(20,false);
     }
 
+    void BurstingSuper() 
+    {
+        int rand = Random.Range(2, 4);
+        for (int i = 0; i <= rand; i++)
+        {
+            SpawnNewBull(15, false);
+        }
+    }
+
+    void Explosion() 
+    {
+        ObjPool.Instance.SpawnObj(TypeObj.ExplosionFromBullet,transform.position);
+    }
+
     void SpawnNewBull(float radius, bool isSplint) 
     {
         Vector3 posNewSplinter = new Vector3(Random.Range(-1f, 1f) * radius, 1, Random.Range(-1f, 1f) * radius);

@@ -22,8 +22,16 @@ public class PerkSO : ScriptableObject
 public enum PerkName : byte
 {
     // названия классов, точ в точ
+    Prediction,
     Extra_Sphere,
+    Fast_Bullet,
+    Slow_Mo_Bullet,
     TwoX_PowerBullet,
+    Bursting_Bullet,
+    Ricochet_Bullet,
+    Slow_Mo_shoot,
+
+
 }
 
 public enum PerkRarity : byte

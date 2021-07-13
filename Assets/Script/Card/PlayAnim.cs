@@ -10,12 +10,10 @@ public class PlayAnim : MonoBehaviour
     private void Start()
     {
         animator = gameObject.GetComponent<Animator>();
-        Debug.Log(gameObject.name);
     }
 
     private void OnValidate()
     {
         gameObject.GetComponent<Animator>().Play(nameAnimation);
-        Debug.Log("PLay anim");
     }
 }

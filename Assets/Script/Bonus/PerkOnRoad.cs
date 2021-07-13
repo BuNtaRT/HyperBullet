@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PerkOnRoad : MonoBehaviour
@@ -42,7 +41,5 @@ public class PerkOnRoad : MonoBehaviour
         }
 
         gameObject.SetActive(false);
-
     }
-
 }

@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class Extra_Sphere : MonoBehaviour,IPerk
 {
+    Color _pastColor;
     public void InitPerk()
     {
-        Debug.Log("StartExtra");
-    }
-
-    public void DisablePerk()
-    {
-        Debug.Log("Disable StartExtra");
+        SphereController.Instance.SetXFactor(0.5f);
+        _pastColor = SphereController.Instance.SetColor(new Color(0.9320817f,0,1,0.7f));
     }
 
     public void DestroyPerk()
     {
-        Debug.Log("Destroy StartExtra");
+        SphereController.Instance.SetXFactor(-0.5f);
+        SphereController.Instance.SetColor(_pastColor);
+        Destroy(this);
     }
 }

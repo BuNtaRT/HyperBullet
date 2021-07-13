@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public enum TypeObj : byte
@@ -33,6 +32,7 @@ public class ObjPool : MonoBehaviour
     List<ObjectsInfo> _objectsInfo = new List<ObjectsInfo>();
 
     Dictionary<TypeObj, Queue<GameObject>> poolDictionary;
+
     void Start()
     {
         poolDictionary = new Dictionary<TypeObj, Queue<GameObject>>();
@@ -59,7 +59,6 @@ public class ObjPool : MonoBehaviour
     {
         if (poolDictionary[type].Count != 0)
         {
-            Debug.Log(poolDictionary[type].Count + " as [" + type + "]" );
             GameObject temp = poolDictionary[type].Dequeue();
             temp.SetActive(true);
             temp.transform.position = position;
@@ -75,7 +74,4 @@ public class ObjPool : MonoBehaviour
         obj.SetActive(false);
         poolDictionary[type].Enqueue(obj);
     }
-
-    
-
 }

@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
+
+public class EventTransform : UnityEvent<Transform> { }
 
 [Serializable]
 class EnemyBehaviorCount 
@@ -28,6 +30,7 @@ public class SpawnerEnemy : MonoBehaviour
                                                  {-15f, 16f,-10f,-10.5f  } };    //Right
     int       _allAvalibleCount;
     Transform _gotoEnemy;
+    public EventTransform OnSpawnEnemy;
     public static SpawnerEnemy Instance { get; private set; }
 
     private void Awake()
@@ -37,7 +40,12 @@ public class SpawnerEnemy : MonoBehaviour
         else
             Debug.LogError("Instance obj over 1");
         _gotoEnemy = transform;
+
+        if (OnSpawnEnemy == null)
+            OnSpawnEnemy = new EventTransform();
     }
+
+    
 
     void Start()
     {
@@ -72,15 +80,15 @@ public class SpawnerEnemy : MonoBehaviour
             CancelInvoke(nameof(ChoiseSite));
         }
     }
-
     void Spawn(float x,float z) 
     {
-        Transform temp = ObjPool.Instance.SpawnObj(TypeObj.Enemy,new Vector3(x,0,z));
-        if (temp != null)
+        Transform lastEnemy = ObjPool.Instance.SpawnObj(TypeObj.Enemy,new Vector3(x,0,z));
+        if (lastEnemy != null)
         {
-            temp.gameObject.AddComponent(ChoiseBehaivor().GetType());
-            EnemyAIBase tempAi = temp.GetComponent<EnemyAIBase>();
+            lastEnemy.gameObject.AddComponent(ChoiseBehaivor().GetType());
+            EnemyAIBase tempAi = lastEnemy.GetComponent<EnemyAIBase>();
             tempAi.GoTo = _gotoEnemy;
+            OnSpawnEnemy?.Invoke(lastEnemy);
         }
     }
 

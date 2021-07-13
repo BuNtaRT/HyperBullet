@@ -36,6 +36,8 @@ public class LoadLvl : MonoBehaviour
                 _enemyList.Add(tempEnemy);
         }
         SendToSpawner();
+
+        BulletSource.SetDefault();
     }
 
     void SendToSpawner() 

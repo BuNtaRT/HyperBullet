@@ -8,13 +8,13 @@ public class PerkNI : MonoBehaviour
 {
     [SerializeField] GameObject     _perkGameObj;
     [SerializeField] SpriteRenderer _perkIco;
-    public static    PerkNI         Instance;
-    IPerk _currPerk;
-
+                     InitNewPerk    _initNewPerk;
+    public static PerkNI Instance;
 
     private void Awake()
     {
         Instance = this;
+        _initNewPerk = gameObject.GetComponent<InitNewPerk>();
     }
 
 
@@ -30,11 +30,7 @@ public class PerkNI : MonoBehaviour
     }
     void InitPerk(PerkSO curretPerk) 
     {
-        // создаем тип по имени из enum.perkName 
-        Debug.Log(curretPerk.perkName.ToString());
-        Type typeObj = Type.GetType(curretPerk.perkName.ToString());
-        _currPerk = (IPerk)Activator.CreateInstance(typeObj);
-        _currPerk.InitPerk();
+        _initNewPerk.InitPerk(curretPerk);
     }
 
     public void ShowAndInitPerk(PerkSO curretPerk) 

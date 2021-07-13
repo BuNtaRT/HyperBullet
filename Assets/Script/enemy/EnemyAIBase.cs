@@ -95,16 +95,34 @@ public class EnemyAIBase : MonoBehaviour
             // уклонение используется в EnemySmart
             if (!Dodge())
             {
-                sbyte damage = other.GetComponent<Bullet>().CollisionEnemy();
+                var tuple = other.GetComponent<Bullet>().CollisionEnemy();
+                sbyte damage = tuple.Item1;
                 MinusHp(damage);
+                if (tuple.Item2 != "" && _hp >= 0) 
+                {
+                    Invoke(tuple.Item2,0);
+                }
             }
         }
     }
 
+    void SlowSpeed() 
+    {
+        StartCoroutine(SlowONSec());
+    }
+
+    IEnumerator SlowONSec() 
+    {
+        time = time * 4;
+        yield return new WaitForSeconds(1f);
+        time = time / 4;
+    }
+
+    float time;
     IEnumerator Go()
     {
         float distance = Vector3.Distance(_enemySpawnPosition, GoTo.position);
-        float time = distance / _enemyObj.MoveSpeed;
+        time = distance / _enemyObj.MoveSpeed;
 
         float timeSteap = 0f;
         while (timeSteap < 1.0f)

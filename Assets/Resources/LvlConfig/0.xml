@@ -9,13 +9,12 @@
     <count>0</count>
   </enemy>
   <enemy type="EnemyHeavy">
+    <count>20</count>
+  </enemy>
+  <enemy type="EnemyLiar">
     <count>0</count>
   </enemy>
   <enemy type="ShadowEnemy">
     <count>0</count>
   </enemy>
-  <enemy type="EnemyLiar">
-    <count>10</count>
-  </enemy>
 </enemys>
-

@@ -26,7 +26,7 @@ public class ChanceBonus : MonoBehaviour
     {
         if (Random.Range(0, 100) <= ChanceForBonus)
         {
-            if (ChanceForPerk >= Random.Range(0, 100)) 
+            if (ChanceForPerk >= Random.Range(0, 100))
             {
                 _perkCall.Spawn(position);
             }

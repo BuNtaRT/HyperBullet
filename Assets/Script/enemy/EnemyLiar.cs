@@ -10,7 +10,7 @@ public class EnemyLiar : EnemyAIBase
     }
     protected override sbyte SetHp()
     {
-        return (sbyte)Random.Range(1,3);
+        return (sbyte)Random.Range(1,5);
     }
     protected override float SetSpeed()
     {

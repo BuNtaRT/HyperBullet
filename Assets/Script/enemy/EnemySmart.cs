@@ -18,7 +18,7 @@ public class EnemySmart : EnemyAIBase
 
     protected override bool Dodge()
     {
-        if (Random.Range(0, 101) >= 0 && !InSphere)
+        if (Random.Range(0, 101) >= 50 && !InSphere)
         {
             InitDodge();
             return true;
@@ -31,7 +31,7 @@ public class EnemySmart : EnemyAIBase
 
     protected override void LateInit()
     {
-        SetRot(Random.Range(0,361));
+        _angleSave = Mathf.Atan2(transform.position.x,transform.position.z)* Mathf.Rad2Deg;
     }
 
     void InitDodge()

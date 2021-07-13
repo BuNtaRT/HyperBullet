@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af3474063a8534d41b522e76356f693c, type: 3}
   m_Name: SphereExtra
   m_EditorClassIdentifier: 
+  rarity: 0
   NameRU: "\u0423\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u0435 \u0449\u0438\u0442\u0430"
   NameEU: Improving the shield
   DescriptionRU: "\u0429\u0438\u0442 \u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0441\u044F
     \u043F\u0440\u043E\u0447\u043D\u0435\u0435"
   DescriptionEU: The shield grows stronger
   Ico: {fileID: 21300000, guid: c3b6ff525553b47459ca6a87176e69dd, type: 3}
-  NameScript: Extra_Sphere
+  perkName: 1
   GradientParticle:
     serializedVersion: 2
-    key0: {r: 1, g: 0.011764705, b: 0.98181725, a: 0.58431375}
-    key1: {r: 0.94509804, g: 0.011764705, b: 0.1474732, a: 0.84313726}
+    key0: {r: 0.15108965, g: 0.011764705, b: 1, a: 0.58431375}
+    key1: {r: 0.41599435, g: 0.17928976, b: 0.745283, a: 0.84313726}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -48,4 +49,4 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
-  MainColor: {r: 0.75420326, g: 0.26666665, b: 0.77254903, a: 1}
+  MainColor: {r: 0.19999999, g: 0.21320109, b: 0.7647059, a: 1}

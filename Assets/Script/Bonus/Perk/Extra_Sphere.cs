@@ -15,6 +15,6 @@ public class Extra_Sphere : MonoBehaviour,IPerk
     {
         SphereController.Instance.SetXFactor(-0.5f);
         SphereController.Instance.SetColor(_pastColor);
-        Destroy(this);
+        Destroy(gameObject);
     }
 }

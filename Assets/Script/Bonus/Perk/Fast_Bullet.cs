@@ -20,6 +20,5 @@ public class Fast_Bullet : MonoBehaviour, IPerk
     {
         BulletSource.SetDefault();
         Destroy(gameObject);
-
     }
 }

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Bursting_Bullet : MonoBehaviour, IPerk
 {
-    public void DestroyPerk()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void InitPerk()
     {
-        Debug.Log("init Distruction bullet");
-        throw new System.NotImplementedException();
+        BulletSource.SetModifyBullet("BurstingSimple");
+    }
+
+    public void DestroyPerk()
+    {
+        BulletSource.SetDefault();
+        Destroy(gameObject);
     }
 }

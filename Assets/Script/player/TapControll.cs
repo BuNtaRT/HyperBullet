@@ -1,19 +1,23 @@
-﻿using DG.Tweening;
-using UnityEngine;
+﻿using UnityEngine;
 public class TapControll : MonoBehaviour
 {
-    public GameObject   Player;
+
     public SpawnerEnemy SpawnerEnemy;
     public PerksUI      PerkCall;
     bool                _disable     = false;
+    Shoot               _shoot;
+    private void Start()
+    {
+        _shoot = Shoot.Instance;
+    }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && !_disable)
         {
-            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
+
             if (Physics.Raycast(ray.origin, ray.direction, out hit))
             {
                 string tag = hit.transform.tag;
@@ -24,24 +28,8 @@ public class TapControll : MonoBehaviour
                 }
                 else 
                 {
-                    Shoot(hit.point);
+                    _shoot.PLayerShoot(hit.point);
                 }
-            }
-        }
-
-        void Shoot(Vector3 positionShoot)
-        {
-            Transform bullet = ObjPool.Instance.SpawnObj(TypeObj.Bullet, Vector3.up);
-            if (bullet != null)
-            {
-                Vector3 cleanCoordinate = new Vector3(positionShoot.x, 0, positionShoot.z);
-                CameraShake.Instance.Shake(1f);
-                Player.transform.DOLookAt(cleanCoordinate, 0.15f);
-
-
-                cleanCoordinate = cleanCoordinate.normalized * 20;
-                cleanCoordinate = new Vector3(cleanCoordinate.x, 1, cleanCoordinate.z);
-                bullet.GetComponent<Bullet>().Init(cleanCoordinate);
             }
         }
 

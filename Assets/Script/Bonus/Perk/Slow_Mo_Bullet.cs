@@ -6,10 +6,11 @@ public class Slow_Mo_Bullet : MonoBehaviour, IPerk
 {
     public void InitPerk()
     {
-        BulletSource.SetModify("SlowSpeed");
+        BulletSource.SetDebaffEnemy("SlowSpeed");
     }
     public void DestroyPerk()
     {
-        throw new System.NotImplementedException();
+        BulletSource.SetDefault();
+        Destroy(gameObject);
     }
 }

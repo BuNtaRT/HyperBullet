@@ -25,7 +25,8 @@ public static class BulletSource
         temp.SetKeys(colorKey,alphaKey);
 
         _bulletData.TrailColor = temp;
-        _bulletData.NameModify = "";
+        _bulletData.NameDebaffEnemy = "";
+        _bulletData.NameModifyBullet = "";
     }
 
     public static void SetHp    (int hp) =>   _bulletData.Hp     = hp > 0   ? (sbyte)hp : (sbyte)1;
@@ -35,7 +36,8 @@ public static class BulletSource
     public static void SetSpeed (float sp) => _bulletData.Speed  = sp > 0.1 ? sp : 2;
   
     public static void SetColor (Gradient col) => _bulletData.TrailColor = col;
-    public static void SetModify (string nameMethod) => _bulletData.NameModify = nameMethod;
+    public static void SetDebaffEnemy (string nameMethod) => _bulletData.NameDebaffEnemy = nameMethod;
+    public static void SetModifyBullet(string nameMethod) { _bulletData.NameModifyBullet = nameMethod;  Debug.Log("set mod bull = " + nameMethod); }
 
     public static BulletData GetConf() 
     {
@@ -49,5 +51,6 @@ public struct BulletData
     public sbyte Damage;
     public float Speed;
     public Gradient TrailColor;
-    public string NameModify;
+    public string NameModifyBullet;
+    public string NameDebaffEnemy;
 }

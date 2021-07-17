@@ -1,20 +1,20 @@
 <enemys>
   <enemy type="EnemySimple">
-    <count>500</count>
+    <count>100</count>
   </enemy>
   <enemy type="EnemyFast">
-    <count>0</count>
+    <count>30</count>
   </enemy>
   <enemy type="EnemySmart">
-    <count>0</count>
+    <count>30</count>
   </enemy>
   <enemy type="EnemyHeavy">
-    <count>0</count>
+    <count>20</count>
   </enemy>
   <enemy type="EnemyLiar">
-    <count>0</count>
+    <count>30</count>
   </enemy>
   <enemy type="ShadowEnemy">
-    <count>0</count>
+    <count>30</count>
   </enemy>
 </enemys>

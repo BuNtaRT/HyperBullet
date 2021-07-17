@@ -6,6 +6,7 @@ public class Shoot : MonoBehaviour
 {
     public GameObject Player;
     string            _modifiedMethod = "";
+    int               _iClone;
     public static Shoot Instance { get; private set; }
 
     private void Awake()
@@ -18,19 +19,24 @@ public class Shoot : MonoBehaviour
 
     public void PLayerShoot(Vector3 positionShoot)
     {
-        Transform bullet = ObjPool.Instance.SpawnObj(TypeObj.Bullet, Vector3.up);
-        if (bullet != null)
+        for (int i = 0; i <= _iClone; i++)
         {
+            if (i == 1)
+                positionShoot *= -1; 
+
+            Transform bullet = ObjPool.Instance.SpawnObj(TypeObj.Bullet, Vector3.up);
             Vector3 cleanCoordinate = new Vector3(positionShoot.x, 0, positionShoot.z);
             CameraShake.Instance.Shake(1f);
-            Player.transform.DOLookAt(cleanCoordinate, 0.15f);
+
+            if(i==0)
+                Player.transform.DOLookAt(cleanCoordinate, 0.15f);
 
             cleanCoordinate = cleanCoordinate.normalized * 20;
             cleanCoordinate = new Vector3(cleanCoordinate.x, 1, cleanCoordinate.z);
             bullet.GetComponent<Bullet>().Init(cleanCoordinate);
 
             if (_modifiedMethod != "")
-                Invoke(_modifiedMethod,0);
+                Invoke(_modifiedMethod, 0);
         }
     }
 
@@ -58,5 +64,15 @@ public class Shoot : MonoBehaviour
         if(Time.timeScale != 0)
             Time.timeScale = 1f;
         _slowMoPlay = false;
+    }
+
+    public void PlayerClone1() 
+    {
+        _iClone = 1;
+    }
+    public void PlayerCloneDisable()
+    {
+        _iClone = 0;
+        _modifiedMethod = "";
     }
 }

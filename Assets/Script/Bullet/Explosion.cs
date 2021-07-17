@@ -5,22 +5,15 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    private void Start()
-    {
-
-    }
     private void OnEnable()
     {
-                Color spC = gameObject.GetComponent<SpriteRenderer>().color;
-        Sequence sequence = DOTween.Sequence();
-        gameObject.transform.localScale = Vector3.zero;
-        sequence.Append(gameObject.GetComponent<SpriteRenderer>().DOColor(new Color(spC.r, spC.g, spC.b, 0.3f),0.4f));
-        sequence.Append(gameObject.GetComponent<SpriteRenderer>().DOColor(new Color(spC.r, spC.g, spC.b, 0.8f),0.2f));
-        sequence.Append(gameObject.GetComponent<SpriteRenderer>().DOColor(new Color(spC.r, spC.g, spC.b, 0),0.4f).OnComplete(() => { Die(); }));
-        gameObject.transform.DOPunchScale(Vector3.one*10,1f,1,0.5f);
+        //transform.localScale = Vector3.zero;
+        //transform.DOPunchScale(Vector3.one * 10, 1f, 1, 0.5f).OnComplete(() => { Die(); });
+        StartCoroutine(Die());
     }
-    void Die() 
+    IEnumerator Die() 
     {
+        yield return new WaitForSeconds(1f);
         ObjPool.Instance.Destroy(TypeObj.ExplosionFromBullet,gameObject);
     }
 }

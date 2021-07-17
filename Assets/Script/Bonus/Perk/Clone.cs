@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Clone : MonoBehaviour
+public class Clone : MonoBehaviour, IPerk
 {
-    // Start is called before the first frame update
-    void Start()
+    public void InitPerk()
     {
-        
+        ClonePlayer.Instance.ClonePerkEnable();
+        Shoot.Instance.SetModified("PlayerClone1");
     }
-
-    // Update is called once per frame
-    void Update()
+    public void DestroyPerk()
     {
-        
+        ClonePlayer.Instance.ClonePerkDisable();
+        Shoot.Instance.SetModified("PlayerCloneDisable");
+        Destroy(gameObject);
     }
 }

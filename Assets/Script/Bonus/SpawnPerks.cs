@@ -54,7 +54,7 @@ public class SpawnPerks : MonoBehaviour
         var sortedPerk = (from st in _perks
                          where st.Value == false
                          select st.Key).ToList();
-
+        Debug.Log("valible perk  = " + sortedPerk.Count);
         if (sortedPerk.Count < 3) 
         {
             // если доступно 2 перка то мы все равно выберим 1 но все остальные восстановим
@@ -68,7 +68,6 @@ public class SpawnPerks : MonoBehaviour
         }
 
         string randomPerkName  = sortedPerk[Random.Range(0, sortedPerk.Count)];
-        _perks[randomPerkName] = true;
         PerkSO newPerk = Resources.Load<PerkSO>(ResourcePath.PERK_SO + randomPerkName);
 
         // спавним собственно
@@ -78,5 +77,11 @@ public class SpawnPerks : MonoBehaviour
         perkObject.SetActive(true);
 
         CallPerkUI(newPerk);
+    }
+
+
+    public void PickItem(string NamePerk) 
+    {
+        _perks[NamePerk] = true;
     }
 }

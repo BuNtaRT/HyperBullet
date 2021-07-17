@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmiBullet : MonoBehaviour
+public class EmiBullet : MonoBehaviour, IPerk
 {
-    // Start is called before the first frame update
-    void Start()
+    public void InitPerk()
     {
-        
+        BulletSource.SetColor(ColorToGradient.Convert(new Color(1, 0.96f, 0.71f)));
+        BulletSource.SetDamage(1);
+        BulletSource.SetSpeed(2);
+        BulletSource.SetDebaffEnemy("EmiBullet");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DestroyPerk()
     {
-        
+        BulletSource.SetDefault();
+        Destroy(gameObject);
     }
 }

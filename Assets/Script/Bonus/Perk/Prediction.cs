@@ -10,9 +10,7 @@ public class Prediction : MonoBehaviour, IPerk
     {
         for (int i = 0; i < 5; i++)
         {
-            Debug.Log(i);
             GameObject temp = Instantiate(Resources.Load<GameObject>(ResourcePath.PERK_OBJ + "Pointer"));
-            Debug.Log(temp);
             temp.SetActive(false);
             _pointers.Enqueue(temp.transform);
         }

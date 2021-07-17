@@ -10,6 +10,7 @@ TagManager:
   - Perk
   - Bullet
   - Sphere
+  - ExplBullet
   layers:
   - Default
   - TransparentFX

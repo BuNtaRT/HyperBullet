@@ -37,7 +37,7 @@ public enum PerkName : byte
     Healt,
     SuperPowerShealt,
     EmiBullet,
-    TwoXDamage,
+    TwoX_Damage,
 }
 
 public enum PerkRarity : byte

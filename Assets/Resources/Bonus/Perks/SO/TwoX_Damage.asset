@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af3474063a8534d41b522e76356f693c, type: 3}
-  m_Name: 2xPowerBullet
+  m_Name: TwoX_Damage
   m_EditorClassIdentifier: 
-  rarity: 1
-  NameRU: "\u041F\u0440\u043E\u0431\u0438\u0432\u043D\u044B\u0435 \u0432\u044B\u0441\u0442\u0440\u0435\u043B\u044B"
-  NameEU: Punching shots
-  DescriptionRU: "\u041F\u0440\u043E\u0441\u0442\u0440\u0435\u043B\u0438\u0432\u0430\u0435\u0442
-    \u0434\u0432\u0443\u0445 \u043F\u0440\u043E\u0442\u0438\u0432\u043D\u0438\u043A\u043E\u0432"
-  DescriptionEU: Flies through the first enemy
-  Ico: {fileID: 21300000, guid: ce88b8e05a080d74ea02a20fe705c87d, type: 3}
-  perkName: 4
+  rarity: 0
+  NameRU: "\u0411\u043E\u043B\u044C\u0448\u0435 \u0443\u0440\u043E\u043D\u0430"
+  NameEU: more damage
+  DescriptionRU: "\u0412 2 \u0440\u0430\u0437\u0430 \u0431\u043E\u043B\u044C\u0448\u0435
+    \u0443\u0440\u043E\u043D\u0430"
+  DescriptionEU: 2 times more damage
+  Ico: {fileID: 21300000, guid: b9dcd1623d4bfe040b612a39db98632a, type: 3}
+  perkName: 15
   GradientParticle:
     serializedVersion: 2
-    key0: {r: 0.011764705, g: 1, b: 0.18057294, a: 0.58431375}
-    key1: {r: 0.15477037, g: 0.8867924, b: 0.853688, a: 0.84313726}
+    key0: {r: 0.011764705, g: 0.80234957, b: 1, a: 0.58431375}
+    key1: {r: 0.16389847, g: 0, b: 1, a: 0.84313726}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -49,4 +49,4 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
-  MainColor: {r: 0.23829654, g: 0.8018868, b: 0.4999634, a: 1}
+  MainColor: {r: 0.3039783, g: 0.5819975, b: 0.9339623, a: 1}

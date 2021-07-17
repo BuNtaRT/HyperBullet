@@ -66,17 +66,8 @@ public class EnemyAIBase : MonoBehaviour
     public void Die()
     {
         StopAllCoroutines();
+        gameObject.GetComponent<Animator>().enabled = true;
         _enemyObj.Die();
-        //try
-        //{
-        //    DestroyImmediate(this);
-        //    Debug.LogWarning("Destroy");
-        //}
-        //catch (System.Exception e)
-        //{
-
-        //    Debug.LogError("Not del  " + e);
-        //}
     }
     public void Attack() 
     {
@@ -113,19 +104,6 @@ public class EnemyAIBase : MonoBehaviour
             }
         }
     }
-
-    void SlowSpeed() 
-    {
-        StartCoroutine(SlowONSec());
-    }
-
-    IEnumerator SlowONSec() 
-    {
-        time = time * 4;
-        yield return new WaitForSeconds(1f);
-        time = time / 4;
-    }
-
     float time;
     IEnumerator Go()
     {
@@ -148,5 +126,39 @@ public class EnemyAIBase : MonoBehaviour
         _enemySpawnPosition = transform.position;
         LookAt();
         StartCoroutine(Go());
+    }
+/*------------------------Modification-------------------------------*/
+    float _timeEmi;
+    bool  _emiEnable = false;
+    void EmiBullet() 
+    {
+        if (!_emiEnable)
+            StartCoroutine(EmiDebaff());
+        else
+            _timeEmi += 1;
+    }
+    IEnumerator EmiDebaff() 
+    {
+        _timeEmi = 1;
+        _emiEnable = true;
+        float timetemp = time;
+        time = 100;
+        Animator enemyAnimator = gameObject.GetComponent<Animator>();
+        enemyAnimator.enabled = false;
+        yield return new WaitForSeconds(1f);
+        enemyAnimator.enabled = true;
+        time = timetemp;
+    }
+//-----------------------------------------------------------------------
+    void SlowSpeed() 
+    {
+        StartCoroutine(SlowONSec());
+    }
+
+    IEnumerator SlowONSec() 
+    {
+        time = time * 4;
+        yield return new WaitForSeconds(1f);
+        time = time / 4;
     }
 }

@@ -49,7 +49,6 @@ public class Bullet : MonoBehaviour
     {
         if (_methodModifyBullet != "" && !IsSplinet)
         {
-            Debug.Log(_methodModifyBullet);
             Invoke(_methodModifyBullet,0);
         }
         MinusHp();

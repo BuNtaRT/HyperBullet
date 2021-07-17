@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperPowerShealt : MonoBehaviour
+public class SuperPowerShealt : MonoBehaviour, IPerk
 {
-    // Start is called before the first frame update
-    void Start()
+    Color _pastColorSphere;
+    Color _pastColorRoad;
+    public void InitPerk()
     {
-        
+        _pastColorSphere = SphereController.Instance.SetColor(new Color(0.9320817f, 0, 1, 0.7f));
+        SphereController.Instance.SetXFactor(0.5f);
+        SphereController.Instance.SetPowerHealing(0.5f);
+        _pastColorRoad = HpLine.ChangeColor(new Color(0.6817942f, 0, 1));
     }
-
-    // Update is called once per frame
-    void Update()
+    public void DestroyPerk()
     {
-        
+        SphereController.Instance.SetPowerHealing(-0.5f);
+        HpLine.ChangeColor(_pastColorRoad);
+        SphereController.Instance.SetXFactor(-0.5f);
+        SphereController.Instance.SetColor(_pastColorSphere);
+        Destroy(gameObject);
     }
 }

@@ -33,7 +33,7 @@ public class ShadowEnemy : EnemyAIBase
     {
         _enemyObj.ChangeLayer((int)ObjLayer.ShadowRoobots);
         yield return new WaitForSeconds(_timer);
-        _enemyObj.ChangeLayer((int)ObjLayer.ProrLight);
+        _enemyObj.ChangeLayer((int)ObjLayer.PropLight);
         yield return new WaitForSeconds(_timer);
         EnableShadowMode();
     }

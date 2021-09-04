@@ -5,6 +5,6 @@
     Ignore_Raycast = 2,
     UI = 5,
     BuildPP = 8,
-    ProrLight = 9,
+    PropLight = 9,
     ShadowRoobots = 10,
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InitNewPerk : MonoBehaviour
 {
@@ -16,8 +17,9 @@ public class InitNewPerk : MonoBehaviour
         //Type typeObj = Type.GetType(curretPerk.perkName.ToString());
         //_currPerk = (IPerk)Activator.CreateInstance(typeObj);
         //_objForPerk.AddComponent(_currPerk.GetType());
-        
+
         _objForPerk = Instantiate(Resources.Load<GameObject>(ResourcePath.PERK_OBJ + curretPerk.perkName.ToString()));
         _objForPerk.GetComponent<IPerk>().InitPerk();
+
     }
 }

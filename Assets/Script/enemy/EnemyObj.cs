@@ -25,7 +25,9 @@ public class EnemyObj : MonoBehaviour
         _currEnemyAI         = enemyAIBase;
         _boxCollider.enabled = true;
         SpeedAnim = 1;
-        ChangeLayer((int)ObjLayer.ProrLight);
+        _anim.enabled = true;
+        ChangeLayer((int)ObjLayer.PropLight);
+
     }
 
     private void Awake()

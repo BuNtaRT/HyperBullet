@@ -79,6 +79,17 @@ public class EnemyAIBase : MonoBehaviour
         _enemyObj.SlowTimeEnable(enable);
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("ExplBullet"))
+        {
+            if (!Dodge())
+            {
+                MinusHp(2);
+            }
+        }
+    }
+
     void OnTriggerEnter(Collider other) 
     {
 
@@ -87,7 +98,7 @@ public class EnemyAIBase : MonoBehaviour
             // уклонение используется в EnemySmart
             if (!Dodge())
             {
-                var tuple = other.GetComponent<Bullet>().CollisionEnemy();
+                var tuple = other.GetComponent<Bullet>().CollisionEnemy(transform.position);
                 sbyte damage = tuple.Item1;
                 MinusHp(damage);
                 if (tuple.Item2 != "" && _hp >= 0)
@@ -96,24 +107,17 @@ public class EnemyAIBase : MonoBehaviour
                 }
             }
         }
-        else if (other.CompareTag("ExplBullet")) 
-        {
-            if (!Dodge())
-            {
-                MinusHp(2);
-            }
-        }
     }
-    float time;
+    float timeToPointPlayer;
     IEnumerator Go()
     {
         float distance = Vector3.Distance(_enemySpawnPosition, GoTo.position);
-        time = distance / _enemyObj.MoveSpeed;
+        timeToPointPlayer = distance / _enemyObj.MoveSpeed;
 
         float timeSteap = 0f;
         while (timeSteap < 1.0f)
         {
-            timeSteap += Time.deltaTime / time / _enemyObj.SpeedAnim;
+            timeSteap += Time.deltaTime / timeToPointPlayer / _enemyObj.SpeedAnim;
             gameObject.transform.position = Vector3.Lerp(_enemySpawnPosition, GoTo.position, timeSteap);
             yield return null;
         }
@@ -141,13 +145,14 @@ public class EnemyAIBase : MonoBehaviour
     {
         _timeEmi = 1;
         _emiEnable = true;
-        float timetemp = time;
-        time = 100;
+        float timetemp = timeToPointPlayer;
+        timeToPointPlayer = 100;
         Animator enemyAnimator = gameObject.GetComponent<Animator>();
         enemyAnimator.enabled = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_timeEmi);
         enemyAnimator.enabled = true;
-        time = timetemp;
+        _emiEnable = false;
+        timeToPointPlayer = timetemp;
     }
 //-----------------------------------------------------------------------
     void SlowSpeed() 
@@ -157,8 +162,8 @@ public class EnemyAIBase : MonoBehaviour
 
     IEnumerator SlowONSec() 
     {
-        time = time * 4;
+        timeToPointPlayer = timeToPointPlayer * 4;
         yield return new WaitForSeconds(1f);
-        time = time / 4;
+        timeToPointPlayer = timeToPointPlayer / 4;
     }
 }

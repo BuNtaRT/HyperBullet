@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
     string        _methodModifyBullet = "";
     Sequence      _seqenceMove;
     TrailRenderer _Trail;
+    Vector3      _enemyPosition;
     private void Awake()
     {
         _Trail = gameObject.GetComponent<TrailRenderer>();
@@ -39,8 +40,9 @@ public class Bullet : MonoBehaviour
         _Trail.colorGradient = gradient;
     }
 
-    public Tuple<sbyte,string> CollisionEnemy() 
+    public Tuple<sbyte,string> CollisionEnemy(Vector3 enemyPosition) 
     {
+        _enemyPosition = enemyPosition; 
         TakeDamage();
         return Tuple.Create(_damage, _methodDebaffEnemy);
     }
@@ -100,14 +102,15 @@ public class Bullet : MonoBehaviour
 
     void Explosion() 
     {
-        ObjPool.Instance.SpawnObj(TypeObj.ExplosionFromBullet,transform.position);
+        _enemyPosition = new Vector3(_enemyPosition.x, 0.4f, _enemyPosition.z);
+        ObjPool.Instance.SpawnObj(TypeObj.ExplosionFromBullet, _enemyPosition);
     }
 
     void SpawnNewBull(float radius, bool isSplint) 
     {
         Vector3 posNewSplinter = new Vector3(Random.Range(-1f, 1f) * radius, 1, Random.Range(-1f, 1f) * radius);
         posNewSplinter += transform.position;
-        Transform temp = ObjPool.Instance.SpawnObj(TypeObj.Bullet, transform.position);
+        Transform temp = ObjPool.Instance.SpawnObj(TypeObj.Bullet, _enemyPosition);
         temp.GetComponent<Bullet>().Init(posNewSplinter);
         temp.GetComponent<Bullet>().IsSplinet = isSplint;
     }

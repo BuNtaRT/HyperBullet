@@ -17,6 +17,7 @@ public class PerkSO : ScriptableObject
 
     public Gradient GradientParticle;
     public Color MainColor;
+
 }
 
 public enum PerkName : byte

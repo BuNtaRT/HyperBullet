@@ -543,7 +543,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109132788}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -576,7 +576,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: a40c73c83e5e68742b2a93bf23c6a815, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.14330244, a: 1}
+  m_Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2909,7 +2909,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 2dedeeadcdbf9cd48a6501bf8ddde38c, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.3163762, a: 0.5019608}
+  m_Color: {r: 0.9985995, g: 1, b: 0, a: 0.29803923}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3240,7 +3240,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 1fb1ee40bbe2ba841b9db611c0477a64, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.3163762, a: 0.5019608}
+  m_Color: {r: 0.9985995, g: 1, b: 0, a: 0.29803923}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4535,6 +4535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 584698144}
   - component: {fileID: 584698145}
+  - component: {fileID: 584698146}
   m_Layer: 0
   m_Name: SpellMenu
   m_TagString: Untagged
@@ -4573,8 +4574,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b38c236f4fd1544ae5548d074a9d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 109132790}
+  _cellsManeger: {fileID: 584698146}
+  _pointerSp: {fileID: 109132790}
   _poinet: {fileID: 109132789}
+--- !u!114 &584698146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584698143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c0902f0b5d67446be5fb00f85ed20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cellsSprite:
+  - {fileID: 443795979}
+  - {fileID: 463360570}
+  - {fileID: 2094094647}
+  - {fileID: 2093544173}
 --- !u!1001 &591475023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17787,7 +17806,7 @@ MonoBehaviour:
   Spawner: {fileID: 54628984}
   StartText: {fileID: 635094329}
   CentreHeroLight: {fileID: 353055441}
-  CoolStart: 0
+  CoolStart: 1
 --- !u!4 &1892904448
 Transform:
   m_ObjectHideFlags: 0
@@ -28924,7 +28943,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 2dedeeadcdbf9cd48a6501bf8ddde38c, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.3163762, a: 0.5019608}
+  m_Color: {r: 0.9985995, g: 1, b: 0, a: 0.29803923}
   m_FlipX: 0
   m_FlipY: 1
   m_DrawMode: 0
@@ -29005,7 +29024,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 7778f24f649baef4bb19479bdf96f637, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.3163762, a: 0.5019608}
+  m_Color: {r: 0.9985995, g: 1, b: 0, a: 0.29803923}
   m_FlipX: 0
   m_FlipY: 1
   m_DrawMode: 0

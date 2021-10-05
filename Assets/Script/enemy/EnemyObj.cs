@@ -84,7 +84,7 @@ public class EnemyObj : MonoBehaviour
 
     public void Die()
     {
-        _spawnerEnemy.MinusEnemy();
+        _spawnerEnemy.MinusEnemy(transform);
         _boxCollider.enabled = false;
         //Destroy(_currEnemyAI);
         //if (_currEnemyAI != null) 

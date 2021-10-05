@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
+
     SpriteRenderer _sprite;
     private void Awake()
     {
@@ -13,6 +14,7 @@ public class Cell : MonoBehaviour
     public void Activate() 
     {
         StartCoroutine(nameof(OffSp));
+
     }
 
     public bool Activ() 

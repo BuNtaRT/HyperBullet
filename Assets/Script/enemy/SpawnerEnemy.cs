@@ -19,16 +19,26 @@ class EnemyBehaviorCount
 public class SpawnerEnemy : MonoBehaviour
 {
 
-    [SerializeField] List<EnemyBehaviorCount> _avalibBehavior = new List<EnemyBehaviorCount>();
+    [SerializeField] List<EnemyBehaviorCount> _avalibBehavior = new List<EnemyBehaviorCount>();     // список доспупных поведений
     [SerializeField] int           _maxOneTimeEnemy = 10;
-    [SerializeField] int           _enemyCountNow   = 0;
                                             //  x - x    z  -  z 
     [SerializeField] float[,]      _siteCoordinate = 
                                                { { 15f, 16f, 10f,-10.5f  },      //Up
                                                  {-15f,-16f, 10f,-10.5f  },      //Down
                                                  {-15f, 16f, 10f, 10.5f  },      //Left
                                                  {-15f, 16f,-10f,-10.5f  } };    //Right
-    int       _allAvalibleCount;
+
+    #region schetchiki
+    [SerializeField]
+    int                  _enemyCountNow = 0;
+    int                  _allAvalibleCount;                       // couint enemy on lvl
+    List<Transform>      _enemyOnGame = new List<Transform>();
+
+    public int             GetCountOnGame()    => _enemyCountNow;
+    public List<Transform> GetTransformAlive() => _enemyOnGame;
+    public int             GetLeft()           => _allAvalibleCount;
+    #endregion
+
     Transform _gotoEnemy;
     public EventTransform OnSpawnEnemy;
     public static SpawnerEnemy Instance { get; private set; }
@@ -56,7 +66,11 @@ public class SpawnerEnemy : MonoBehaviour
         InvokeRepeating(nameof(ChoiseSite), 0f, 1f);
     }
 
-    public void MinusEnemy() => _enemyCountNow--;
+    public void MinusEnemy(Transform enemy)
+    {
+        _enemyCountNow--;
+        _enemyOnGame.Remove(enemy);
+    }
 
     public void AddNewBehaivor(EnemyAIBase enemyAI, int count) 
     {
@@ -82,13 +96,14 @@ public class SpawnerEnemy : MonoBehaviour
     }
     void Spawn(float x,float z) 
     {
-        Transform lastEnemy = ObjPool.Instance.SpawnObj(TypeObj.Enemy,new Vector3(x,0,z));
-        if (lastEnemy != null)
+        Transform Enemy = ObjPool.Instance.SpawnObj(TypeObj.Enemy,new Vector3(x,0,z));
+        if (Enemy != null)
         {
-            lastEnemy.gameObject.AddComponent(ChoiseBehaivor().GetType());
-            EnemyAIBase tempAi = lastEnemy.GetComponent<EnemyAIBase>();
+            _enemyOnGame.Add(Enemy);
+            Enemy.gameObject.AddComponent(ChoiseBehaivor().GetType());
+            EnemyAIBase tempAi = Enemy.GetComponent<EnemyAIBase>();
             tempAi.GoTo = _gotoEnemy;
-            OnSpawnEnemy?.Invoke(lastEnemy);
+            OnSpawnEnemy?.Invoke(Enemy);
         }
     }
 
@@ -105,15 +120,15 @@ public class SpawnerEnemy : MonoBehaviour
         return temp;
     }
 
-    IEnumerator SetAI(Transform enemy,EnemyAIBase behaivor,Transform Goto) 
-    {
-        //yield return null;
-        //Destroy(enemy.GetComponent<EnemyAIBase>());
-        //yield return null;
-        enemy.gameObject.AddComponent(behaivor.GetType());
-        EnemyAIBase tempAi = enemy.GetComponent<EnemyAIBase>();
-        tempAi.GoTo = Goto;
-        yield return null;
+    //IEnumerator SetAI(Transform enemy,EnemyAIBase behaivor,Transform Goto) 
+    //{
+    //    //yield return null;
+    //    //Destroy(enemy.GetComponent<EnemyAIBase>());
+    //    //yield return null;
+    //    enemy.gameObject.AddComponent(behaivor.GetType());
+    //    EnemyAIBase tempAi = enemy.GetComponent<EnemyAIBase>();
+    //    tempAi.GoTo = Goto;
+    //    yield return null;
 
-    }
+    //}
 }

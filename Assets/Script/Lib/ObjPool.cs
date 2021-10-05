@@ -4,10 +4,10 @@ using System.Linq;
 using UnityEngine;
 public enum TypeObj : byte
 {
-    Card,
     Enemy,
     Bullet,
     ExplosionFromBullet,
+    Spell,
 }
 
 public class ObjPool : MonoBehaviour

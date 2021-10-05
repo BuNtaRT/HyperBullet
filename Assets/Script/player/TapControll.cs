@@ -8,6 +8,8 @@ public class TapControll : MonoBehaviour
     public PerksUI      PerkCall;
     bool                _disable     = false;
     Shoot               _shoot;
+
+
     private void Start()
     {
         _shoot = Shoot.Instance;
@@ -46,8 +48,10 @@ public class TapControll : MonoBehaviour
                 if (Physics.Raycast(ray.origin, ray.direction, out hit))
                 {
                     Time.timeScale = 0.2f;
-
-                    SpellPointer.LookAt(hit.point);
+                    if (hit.point.sqrMagnitude <= 10)
+                        SpellPointer.LookAt(hit.point,true);
+                    else
+                        SpellPointer.LookAt(hit.point,false);
                 }
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)

@@ -10,10 +10,11 @@ public class ChanceBonus : MonoBehaviour
     // для перков
     public int ChanceForPerk = 100;
     // для карточных бонусов
-    public int ChanceForCards = 0;
+    public int ChanceForSpell = 100;
     #endregion
     public static    ChanceBonus Instance { get; private set; }
     [SerializeField] SpawnPerks       _perkCall;
+    [SerializeField] SpawnSpell       _spellCall;
 
 
     private void Awake()
@@ -26,10 +27,10 @@ public class ChanceBonus : MonoBehaviour
     {
         if (Random.Range(0, 100) <= ChanceForBonus)
         {
-            if (ChanceForPerk >= Random.Range(0, 100))
-            {
-                _perkCall.Spawn(position);
-            }
+            if (ChanceForSpell >= Random.Range(0, 100))
+                _spellCall.Spawn(position);
+            //if (ChanceForPerk >= Random.Range(0, 100))
+             //   _perkCall.Spawn(position);
         }
     }
 }

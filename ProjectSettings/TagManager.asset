@@ -11,6 +11,8 @@ TagManager:
   - Bullet
   - Sphere
   - ExplBullet
+  - ItemOnRoad
+  - Spell
   layers:
   - Default
   - TransparentFX

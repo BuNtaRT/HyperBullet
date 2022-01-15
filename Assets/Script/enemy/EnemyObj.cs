@@ -16,16 +16,15 @@ public class EnemyObj : MonoBehaviour
 
     EnemyAIBase    _currEnemyAI;
 
-    SpawnerEnemy _spawnerEnemy;
     public void ReInit(EnemyAIBase enemyAIBase) 
     {
-        //Destroy(_currEnemyAI);
         _anim.Play("Run");
         _anim.SetBool("Run", true);
         _currEnemyAI         = enemyAIBase;
         _boxCollider.enabled = true;
-        SpeedAnim = 1;
-        _anim.enabled = true;
+        _anim.enabled        = true;
+        SpeedAnim            = 1;
+
         ChangeLayer((int)ObjLayer.PropLight);
 
     }
@@ -44,8 +43,7 @@ public class EnemyObj : MonoBehaviour
 
     private void Start()
     {
-        _spawnerEnemy = SpawnerEnemy.Instance;
-        ShowCastScene(false);
+        //ShowCastScene(false);
     }
 
     public void SetColor(Color color) 
@@ -78,13 +76,13 @@ public class EnemyObj : MonoBehaviour
         else
         {
             _defaultSpeed = MoveSpeed;
-            MoveSpeed = MoveSpeed / slowX;
+            MoveSpeed     = MoveSpeed / slowX;
         }
     }
 
     public void Die()
     {
-        _spawnerEnemy.MinusEnemy(transform);
+        GlobalEventsManager.SendEnemyKill(transform);
         _boxCollider.enabled = false;
         //Destroy(_currEnemyAI);
         //if (_currEnemyAI != null) 
@@ -101,14 +99,13 @@ public class EnemyObj : MonoBehaviour
         transform.eulerAngles = tempRot;
         Destroy(tempDot);
 
-        ChanceBonus.Instance.EnemyDie(transform.position);
         _anim.Play("Die");
         _anim.SetBool("Die", true);
         gameObject.transform.DOMove(roboBeforePos, 0.8f);
         Color lightColor = _fake_light.color;
         _fake_light.DOColor(new Color(lightColor.r, lightColor.g, lightColor.b, 0), 1);
         StartCoroutine(SetActiveFalse());
-        SphereController.Instance.RemoveEnemy(gameObject.GetComponent<EnemyObj>());
+
         Destroy(_currEnemyAI);
     }
     IEnumerator SetActiveFalse()

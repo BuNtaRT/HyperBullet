@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Anim_start : MonoBehaviour
 {
+    /*
     // Don`t look this script please)), it`s very bad code, just this simple animation and camera set position on start game
     public Vector3 pos0;
     public Vector3 qua0;
@@ -170,5 +171,5 @@ public class Anim_start : MonoBehaviour
         camera.position = pos;
         camera.eulerAngles = rot;
     }
-
+    */
 }

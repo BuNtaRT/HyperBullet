@@ -6,32 +6,32 @@ using UnityEngine.UI;
 public class PerksUI : MonoBehaviour
 {
     // тут UI взаимодействие игрока с перками 
-    public PerkSO     PerkNow;
-    TapControll _tapControll;
+    public PerkSO      PerkNow;
+
     #region UI
-    public GameObject WindowPerk;
+    public GameObject  WindowPerk;
 
     [Header("Text")]
-    public Text       NamePerk;
-    public Text       DescrPerk;
+    public Text        NamePerk;
+    public Text        DescrPerk;
 
     [Header("Particle")]
-    public GameObject Particle1;
-    public GameObject Particle2;
+    public GameObject  Particle1;
+    public GameObject  Particle2;
 
     [Header("Animation")]
-    public Animator   Card;
-    public Animator   Buttons;
-    public Animator   TextObj;
+    public Animator    Card;
+    public Animator    Buttons;
+    public Animator    TextObj;
 
     [Header("Card")]
-    public Image      IcoPerk;
-    public Transform  Borders;
+    public Image       IcoPerk;
+    public Transform   Borders;
     #endregion
 
     private void Awake()
     {
-        _tapControll = Camera.main.GetComponent<TapControll>();
+        GlobalEventsManager.OnGetPerk.AddListener(PerkShow);
     }
 
     public void ChoisePerk(bool choise) 
@@ -53,15 +53,15 @@ public class PerksUI : MonoBehaviour
     IEnumerator ClosePerks()
     {
         yield return new WaitForSecondsRealtime(0.9f);
-        Time.timeScale = 1;
-        _tapControll.Disable(false);
+        GlobalEventsManager.InvokPause(PauseStatus.pickPerk,false);
         WindowPerk.SetActive(false);
     }
 
-    // когда мы взяли перк с дороги (TapControll) то выводим о нем информацию 
+    // когда мы взяли перк с дороги то выводим о нем информацию 
     public void PerkShow()
     {
-        _tapControll.Disable(true);
+        GlobalEventsManager.InvokPause(PauseStatus.pickPerk, true);
+
         string name;
         string desc;
 
@@ -80,8 +80,6 @@ public class PerksUI : MonoBehaviour
         DescrPerk.text = desc;
         IcoPerk.sprite = PerkNow.Ico;
 
-
-        Time.timeScale = 0;
         TextObj.Play("TextShow");
         Buttons.Play("ButtonShow");
         Card.Play("cardShow");

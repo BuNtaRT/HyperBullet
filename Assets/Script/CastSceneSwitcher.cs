@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class CastSceneSwitcher : MonoBehaviour
 {
+    /*
     public List<GameObject> HideOnGame;
     public List<Light> LightHideOnGame;
     public List<GameObject> ShowOnGame;
@@ -35,4 +36,5 @@ public class CastSceneSwitcher : MonoBehaviour
             temp.SetActive(!ac);
         }
     }
+    */
 }

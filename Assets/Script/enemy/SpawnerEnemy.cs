@@ -40,7 +40,7 @@ public class SpawnerEnemy : MonoBehaviour
     #endregion
 
     Transform _gotoEnemy;
-    public EventTransform OnSpawnEnemy;
+    public EventTransform OnSpawnEnemy = new EventTransform();
     public static SpawnerEnemy Instance { get; private set; }
 
     private void Awake()
@@ -51,8 +51,7 @@ public class SpawnerEnemy : MonoBehaviour
             Debug.LogError("Instance obj over 1");
         _gotoEnemy = transform;
 
-        if (OnSpawnEnemy == null)
-            OnSpawnEnemy = new EventTransform();
+        GlobalEventsManager.OnEnemyKill.AddListener(MinusEnemy);
     }
 
     
@@ -119,16 +118,4 @@ public class SpawnerEnemy : MonoBehaviour
         }
         return temp;
     }
-
-    //IEnumerator SetAI(Transform enemy,EnemyAIBase behaivor,Transform Goto) 
-    //{
-    //    //yield return null;
-    //    //Destroy(enemy.GetComponent<EnemyAIBase>());
-    //    //yield return null;
-    //    enemy.gameObject.AddComponent(behaivor.GetType());
-    //    EnemyAIBase tempAi = enemy.GetComponent<EnemyAIBase>();
-    //    tempAi.GoTo = Goto;
-    //    yield return null;
-
-    //}
 }

@@ -7,6 +7,7 @@ public class Shoot : MonoBehaviour
     public GameObject Player;
     string            _modifiedMethod = "";
     int               _iClone;
+    float             _curretPrice;
     public static Shoot Instance { get; private set; }
 
     private void Awake()
@@ -15,10 +16,14 @@ public class Shoot : MonoBehaviour
             Instance = this;
         else
             Debug.LogError("Instance obj over 1");
+
     }
+
 
     public void PLayerShoot(Vector3 positionShoot)
     {
+        //TODO: Использовать списание пуль при выстреле 
+        //if(SessionBullet.Instance.WriteOff(_curretPrice))
         for (int i = 0; i <= _iClone; i++)
         {
             if (i == 1)
@@ -60,18 +65,21 @@ public class Shoot : MonoBehaviour
     {
         _slowMoPlay = true;
         Time.timeScale = 0.3f;
-        yield return new WaitForSecondsRealtime(0.6f);
-        if(Time.timeScale != 0)
-            Time.timeScale = 1f;
+        yield return new WaitForSeconds(0.2f);
+        Time.timeScale = 1f;
+
         _slowMoPlay = false;
     }
 
     public void PlayerClone1() 
     {
+        Debug.LogWarning("this Working WHAT THIS DOING ????");
         _iClone = 1;
     }
     public void PlayerCloneDisable()
     {
+        Debug.LogWarning("this Working WHAT THIS DOING ????");
+
         _iClone = 0;
         _modifiedMethod = "";
     }

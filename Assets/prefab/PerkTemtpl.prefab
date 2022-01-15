@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -95,7 +96,7 @@ GameObject:
   - component: {fileID: 6969736708128127495}
   m_Layer: 0
   m_Name: PerkTemtpl
-  m_TagString: Perk
+  m_TagString: ItemOnRoad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09702a7ef24b0de448e67eb2b6dba605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bgPerk: {fileID: 0}
+  _ico: {fileID: 6969736708187221971}
+  _bg: {fileID: 6969736708522430447}
 --- !u!65 &6969736708128127492
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -205,6 +207,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -286,6 +289,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

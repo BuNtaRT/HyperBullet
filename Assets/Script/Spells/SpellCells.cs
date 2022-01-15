@@ -17,17 +17,14 @@ public class SpellCells : MonoBehaviour
         }
     }
 
-    const float BIG_SCALE_CELL    = 3.5f;
-    const float NORMAL_SCALE_CELL = 2f;
-
     // controll spellCell (image, script, activation) !! queue important !!
-    [SerializeField] 
-    List<SpriteRenderer>     _cellsSprite;
-    Dictionary<int, Degrees> _degress      = new Dictionary<int, Degrees>();
-    int                      _lastSite     = -1;
-    bool                     _hide = false;
-
-    private void Awake()
+             [SerializeField] 
+             List<Cell>                _cells;
+    readonly Dictionary<int, Degrees> _degress      = new Dictionary<int, Degrees>();
+             int                      _lastSite     = -1;
+             bool                     _hide         = false;
+            
+    void Awake()
     {
         _degress.Add(0, new Degrees() { MinValue = 0, MaxValue = 90 });
         _degress.Add(1, new Degrees() { MinValue = 91, MaxValue = 180 });
@@ -35,7 +32,8 @@ public class SpellCells : MonoBehaviour
         _degress.Add(3, new Degrees() { MinValue = -89, MaxValue = -1 });
     }
 
-    public void LookTo(float deg) // out Site
+    //тут узнается на какую ячейку мы смотрим
+    public void LookTo(float deg)
     {
         if (!_hide)
         {
@@ -47,10 +45,9 @@ public class SpellCells : MonoBehaviour
                 if (!temp.Check(deg))
                 {
                     int newSite = ReSearche(deg);
-                    ResizeCell(false, _lastSite);
-                    ResizeCell(true, newSite);
+                    ReadyCell(false, _lastSite);
+                    ReadyCell(true, newSite);
                     _lastSite = newSite;
-                    Debug.Log(_lastSite);
                 }
             }
             else
@@ -59,52 +56,50 @@ public class SpellCells : MonoBehaviour
                 if (_lastSite == -1)
                 {
                     _lastSite = newSite;
-                    ResizeCell(true, newSite);
-                    Debug.Log(_lastSite);
-
+                    ReadyCell(true, newSite);
                 }
             }
         }
     }
 
-    public void Pick() 
+    public void StartState() 
     {
-
-        ResizeCell(false, _lastSite);
-        //int targetCell = ReSearche(deg);
-        _cellsSprite[_lastSite].GetComponent<Cell>().Activate();
-    }
-
-    public void DontPick() 
-    {
-        ResizeCell(false, _lastSite);
-    }
-
-    public void SetSaturation(float saturation) 
-    {
-        saturation = Mathf.Clamp(saturation, 0.3f, 1);
-        foreach (SpriteRenderer temp in _cellsSprite)
-            temp.DOColor(new Color(temp.color.r, temp.color.g, temp.color.b,saturation),0.25f).SetUpdate(true);
-    }
-
-    public void Hide(bool hide) 
-    {
-        _hide = hide;
-        if (hide)
+        _lastSite = -1;
+        foreach (var item in _cells)
         {
-            ResizeCell(!_hide, _lastSite);
+            item.StartState();
+        }
+    }
+
+    public void StandByState(bool enable) 
+    {
+        if (enable)
+        {
+            _hide = true;
+            if (_lastSite >= 0)
+                _cells[_lastSite].ReadyState(false);
+        }
+        else 
+        {
+            _hide = false;
             _lastSite = -1;
         }
     }
 
-    public void Reinit() 
+    public void EndState(bool pick) 
     {
-        _lastSite = -1;
+        if (_lastSite >= 0 && pick)
+        {
+            ReadyCell(false, _lastSite);
+            _cells[_lastSite].GetComponent<Cell>().Activate();
+        }
+        foreach (var item in _cells)
+        {
+            item.EndState();
+        }
     }
-
     int ReSearche(float deg) // осуществяем полный поиск по углу и возвращаем сторону
     {
-
         foreach (var item in _degress)
         {
             if (item.Value.Check(deg))
@@ -115,19 +110,14 @@ public class SpellCells : MonoBehaviour
         return 0;
     }
 
-    void ResizeCell(bool up,int index) 
+    void ReadyCell(bool ready,int index) 
     {
         if (index != -1)
         {
-            float scale;
-            if (up)
-                scale = BIG_SCALE_CELL;
-            else
-                scale = NORMAL_SCALE_CELL;
-
-            _cellsSprite[index].transform.DOScale(scale, 0.25f).SetUpdate(true);
+            _cells[index].ReadyState(ready);
         }
     }
+
 
 
 }

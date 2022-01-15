@@ -8,11 +8,13 @@ public enum TypeObj : byte
     Bullet,
     ExplosionFromBullet,
     Spell,
+    None
 }
 
 public class ObjPool : MonoBehaviour
 {
     GameObject _overSpawnCell;
+    GameObject _mainContainer;
     public static ObjPool Instance { get; private set; }
 
     void Awake()
@@ -21,7 +23,27 @@ public class ObjPool : MonoBehaviour
             Instance = this;
         else
             Debug.LogError("Instance obj over 1");
+
+        GlobalEventsManager.OnPause.AddListener(PauseSub);
     }
+    void PauseSub(PauseStatus status, bool enable) 
+    {
+        if (status == PauseStatus.cutScene) 
+        {
+            if (enable)
+            {
+                _mainContainer.transform.position = new Vector3(0, -10, 0);
+                _mainContainer.transform.localScale = Vector3.zero;
+            }
+            else
+            {
+                _mainContainer.transform.position = Vector3.zero;
+                _mainContainer.transform.localScale = Vector3.one;
+
+            }
+        }
+    }
+
 
     [Serializable]
     public struct ObjectsInfo 
@@ -38,14 +60,20 @@ public class ObjPool : MonoBehaviour
 
     void Start()
     {
+        _mainContainer = new GameObject();
+        _mainContainer.name = "SpawnerContainer";
+
         _overSpawnCell = new GameObject();
         _overSpawnCell.name = "OverSpawnCell";
+        _overSpawnCell.transform.SetParent(_mainContainer.transform);
         poolDictionary = new Dictionary<TypeObj, Queue<GameObject>>();
 
         foreach (ObjectsInfo temp in _objectsInfo)
         {
             GameObject cellPool = new GameObject();
+            cellPool.transform.SetParent(_mainContainer.transform);
             cellPool.name = temp.Prefab.name;
+
             Queue<GameObject> tempQueue = new Queue<GameObject>();
             for (int i = 0; i < temp.Count; i++)
             {

@@ -18,6 +18,7 @@ public class SpawnPerks : MonoBehaviour
     //загружаем доступные перки
     private void Awake()
     {
+        //TODO: что то тут не так, загрузка происходит в спавнере перков?? ты ёбнутый, тем более как то криво?? исправить!!
                  _perks   = new Dictionary<string, bool>();
         Object[] tempPerk = Resources.LoadAll(ResourcePath.PERK_SO, typeof(PerkSO));
         foreach (PerkSO temp in tempPerk)
@@ -65,6 +66,7 @@ public class SpawnPerks : MonoBehaviour
                 tempMainDic.Add(temp.Key,false);
             }
             _perks = tempMainDic;
+
         }
 
         string randomPerkName  = sortedPerk[Random.Range(0, sortedPerk.Count)];

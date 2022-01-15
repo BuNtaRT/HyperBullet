@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class EnemyAIBase : MonoBehaviour
 {
-    public Transform GoTo;
 
-    Vector3 _enemySpawnPosition;
+    protected EnemyObj   _enemyObj          ;
+    public    bool       InSphere = false   ;
+    public    Transform  GoTo               ;
+              Vector3    _enemySpawnPosition;
+              sbyte      _hp   = 2          ;
+              bool       _pause = false     ;
 
-    protected EnemyObj _enemyObj;
-
-    public bool InSphere = false;
-
-    sbyte _hp = 2;
 
     void Start()
     {
@@ -63,12 +62,7 @@ public class EnemyAIBase : MonoBehaviour
     {
         _enemyObj.ShowCastScene(cast);
     }
-    public void Die()
-    {
-        StopAllCoroutines();
-        gameObject.GetComponent<Animator>().enabled = true;
-        _enemyObj.Die();
-    }
+
     public void Attack() 
     {
         _enemyObj.Attack();
@@ -79,7 +73,7 @@ public class EnemyAIBase : MonoBehaviour
         _enemyObj.SlowTimeEnable(enable);
     }
 
-    private void OnTriggerStay(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("ExplBullet"))
         {
@@ -88,6 +82,12 @@ public class EnemyAIBase : MonoBehaviour
                 MinusHp(2);
             }
         }
+    }
+    void Die()
+    {
+        StopAllCoroutines();
+        gameObject.GetComponent<Animator>().enabled = true;
+        _enemyObj.Die();
     }
 
     void OnTriggerEnter(Collider other) 
@@ -107,7 +107,12 @@ public class EnemyAIBase : MonoBehaviour
                 }
             }
         }
+        else if (other.CompareTag("Spell"))
+        {
+            MinusHp(64);
+        }
     }
+
     float timeToPointPlayer;
     IEnumerator Go()
     {
@@ -120,6 +125,7 @@ public class EnemyAIBase : MonoBehaviour
             timeSteap += Time.deltaTime / timeToPointPlayer / _enemyObj.SpeedAnim;
             gameObject.transform.position = Vector3.Lerp(_enemySpawnPosition, GoTo.position, timeSteap);
             yield return null;
+
         }
         yield return new WaitForSeconds(0);
     }

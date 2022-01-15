@@ -15,17 +15,25 @@ public class Bullet : MonoBehaviour
     string        _methodDebaffEnemy  = "";
     string        _methodModifyBullet = "";
     Sequence      _seqenceMove;
-    TrailRenderer _Trail;
+    TrailRenderer _trail;
     Vector3      _enemyPosition;
     private void Awake()
     {
-        _Trail = gameObject.GetComponent<TrailRenderer>();
+        _trail = gameObject.GetComponent<TrailRenderer>();
+        GlobalEventsManager.OnPause.AddListener(PauseSub);
+    }
+    void PauseSub(PauseStatus status, bool enable)
+    {
+        if (status == PauseStatus.cutScene)
+        {
+            _trail.enabled = !enable;
+        }
     }
     public void Init(Vector3 end) 
     {
         die       = false;
         IsSplinet = false;
-        var conf  = BulletSource.GetConf();
+        var conf  = BulletBase.GetConf();
         _hp       = conf.Hp;
         _damage   = conf.Damage;
         _speed    = conf.Speed;
@@ -37,7 +45,7 @@ public class Bullet : MonoBehaviour
 
     void SetColorTrail(Gradient gradient) 
     {
-        _Trail.colorGradient = gradient;
+        _trail.colorGradient = gradient;
     }
 
     public Tuple<sbyte,string> CollisionEnemy(Vector3 enemyPosition) 

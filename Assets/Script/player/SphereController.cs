@@ -23,6 +23,8 @@ public class SphereController : MonoBehaviour
             Instance = this;
         else
             Debug.LogError("Instance obj over 1");
+
+        GlobalEventsManager.OnEnemyKill.AddListener(RemoveEnemy);
     }
 
     private void Start()
@@ -134,8 +136,8 @@ public class SphereController : MonoBehaviour
             _enemyList.Add(enemy);
     }
 
-    public void RemoveEnemy(EnemyObj enemy) 
+    public void RemoveEnemy(Transform enemy) 
     {
-        _enemyList.Remove(enemy);
+        _enemyList.Remove(enemy.GetComponent<EnemyObj>());
     }
 }

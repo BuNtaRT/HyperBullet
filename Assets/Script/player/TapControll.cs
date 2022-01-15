@@ -1,95 +1,125 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TapControll : MonoBehaviour
 {
-    public SpawnerEnemy SpawnerEnemy;
-    public SpellPointer SpellPointer;
-    public PerksUI      PerkCall;
-    bool                _disable     = false;
-    Shoot               _shoot;
+    public SpawnerEnemy    SpawnerEnemy         ;
+    public SpellPointer    SpellPointer         ;
+           bool            _disable      = false;
+           Shoot           _shoot               ;
+           Vector2         _beganTouch          ;
+           float           _resolCoeff          ;
+           bool            _reqNextPoint = false;
+           Action<Vector3> _nextPointFor        ;
 
+    public static TapControll Instance;
 
-    private void Start()
+    void Awake()
+    {
+        if (Instance != null)
+            throw new System.Exception("TapControll install over 1");
+        else
+            Instance = this;
+
+        //8.5 radius sphere on fullHD
+        _resolCoeff = 8.5f*((float)1080 / Screen.width);
+
+        GlobalEventsManager.OnPause.AddListener(PauseSub);
+    }
+    bool _pause = false;
+    void PauseSub(PauseStatus status, bool enable) 
+    {
+        if(status != PauseStatus.pickSpellDir)
+            _pause = enable;
+    }
+
+    void Start()
     {
         _shoot = Shoot.Instance;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !_disable)
+        if (!_pause)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit = new RaycastHit();
-
-            if (Physics.Raycast(ray.origin, ray.direction, out hit))
+#if UNITY_EDITOR
+            if (Input.GetMouseButtonDown(0))
             {
-                string tag = hit.transform.tag;
-                if (tag == "Perk")
-                {
-                    PerkCall.PerkShow();
-                    hit.transform.gameObject.SetActive(false);
-                }
-                else 
-                {
-                    _shoot.PLayerShoot(hit.point);
-                }
-            }
-        }
-
-        if (Input.touchCount == 1 && !_disable)
-        {
-
-
-            if (Input.GetTouch(0).phase == TouchPhase.Moved)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                RaycastHit hit;
-                if (Physics.Raycast(ray.origin, ray.direction, out hit))
-                {
-                    Time.timeScale = 0.2f;
-                    if (hit.point.sqrMagnitude <= 10)
-                        SpellPointer.LookAt(hit.point,true);
-                    else
-                        SpellPointer.LookAt(hit.point,false);
-                }
-            }
-            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                RaycastHit hit;
-                if (Physics.Raycast(ray.origin, ray.direction, out hit))
-                {
-                    Time.timeScale = 1f;
-                    SpellPointer.End(hit.point);
-                }
-            }
-            
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit = new RaycastHit();
 
                 if (Physics.Raycast(ray.origin, ray.direction, out hit))
                 {
-                    string tag = hit.transform.tag;
-                    if (tag == "Perk")
+                    if (_reqNextPoint)
                     {
-                        PerkCall.PerkShow();
-                        hit.transform.gameObject.SetActive(false);
+                        GivePoint(hit.point);
                     }
                     else
                     {
-                        _shoot.PLayerShoot(hit.point);
+                        string tag = hit.transform.tag;
+                        if (tag == "ItemOnRoad")
+                            hit.transform.GetComponent<IItemOnRoad>().Pick();
+                        else
+                            _shoot.PLayerShoot(hit.point);
+                    }
+                }
+            }
+#endif
+            if (Input.touchCount == 1)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                RaycastHit hit;
+                if (Physics.Raycast(ray.origin, ray.direction, out hit))
+                {
+                    if (_reqNextPoint)
+                    {
+                        GivePoint(hit.point);
+                    }
+                    else if (Input.GetTouch(0).phase == TouchPhase.Moved)
+                    {
+                        Time.timeScale = 0.2f;
+                        if (hit.point.sqrMagnitude <= _resolCoeff)
+                            SpellPointer.LookAt(hit.point, true);
+                        else
+                            SpellPointer.LookAt(hit.point, false);
+                    }
+                    else if (Input.GetTouch(0).phase == TouchPhase.Began)
+                    {
+                        _beganTouch = new Vector2(hit.point.x, hit.point.z);
+                        string tag = hit.transform.tag;
+                        if (tag == "ItemOnRoad")
+                            hit.transform.GetComponent<IItemOnRoad>().Pick();
+                        else
+                            _shoot.PLayerShoot(hit.point);
+                    }
+                    else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+                    {
+                        Vector2 endPos = new Vector2(hit.point.x, hit.point.z);
+                        Time.timeScale = 1f;
+                        if ((_beganTouch - endPos).sqrMagnitude >= _resolCoeff)
+                            SpellPointer.End(true);
+                        else
+                            SpellPointer.End(false);
                     }
                 }
             }
         }
-
     }
 
-    public void Disable(bool dis)
+    public void GetNextPoint(Action<Vector3> @for) 
     {
-        _disable = dis;
+        GlobalEventsManager.InvokPause(PauseStatus.pickSpellDir,true);
+        RuntimeUI.Instance.ShowMessage("Выбите направление");
+        _nextPointFor = @for;
+        _reqNextPoint = true;
     }
+
+    void GivePoint(Vector3 point) 
+    {
+        GlobalEventsManager.InvokPause(PauseStatus.pickSpellDir, false);
+        _reqNextPoint = false;
+        _nextPointFor?.Invoke(point);
+    }
+
 }

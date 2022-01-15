@@ -34,5 +34,7 @@ public class CameraShake : MonoBehaviour
             CMCP.m_AmplitudeGain = progress;
             yield return null;
         }
+
     }
+
 }

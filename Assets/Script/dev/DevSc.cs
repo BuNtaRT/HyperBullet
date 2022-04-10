@@ -45,7 +45,7 @@ public class DevSc : MonoBehaviour
     {
         Debug.Log("get data = "  + SpellDropDown.options[index].text);
         SpellSO temp = Resources.Load<SpellSO>(ResourcePath.SPELL_SO + SpellDropDown.options[index].text);
-        GlobalEventsManager.SendSpell(temp);
+        //GlobalEventsManager.SendSpell(temp);
     }
 
     bool _pause=false;

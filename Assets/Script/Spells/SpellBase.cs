@@ -6,10 +6,13 @@ public class SpellBase : MonoBehaviour
 {
     protected SpellSO _spell;
     protected Vector3 _touchPoint;
+    protected Transform _mapContainer;
     public virtual void Init(SpellSO spell) 
     {
         _spell = spell;
-        if (_spell.Area != 0)
+        LvlSpellInit();
+
+        if (_spell.Area)
         {
             TapControll.Instance.GetNextPoint(SetPoint);
         }
@@ -25,9 +28,19 @@ public class SpellBase : MonoBehaviour
         InitOverride();
     }
 
-    protected virtual void InitOverride() 
+    protected void LookAtProp(Transform prop) 
     {
-        
+        prop.position = new Vector3(0, 0.5f, 0);
+        prop.LookAt(_touchPoint);
+        prop.eulerAngles = new Vector3(0, prop.eulerAngles.y, 0);
     }
+
+    protected virtual void InitOverride() {}
+    protected virtual void LvlSpellInit() {}
+    protected virtual void EndAnimation() 
+    {
+        _mapContainer = CutScene.Instance.GetMapContainer();
+    }
+
 
 }

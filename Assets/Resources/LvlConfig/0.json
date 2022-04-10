@@ -1,0 +1,38 @@
+{
+  "RoboEnemy": [
+    {
+      "Name": "EnemySimple",
+      "Count": 100
+    },
+    {
+      "Name": "EnemyFast",
+      "Count": 100
+    },
+    {
+      "Name": "EnemySmart",
+      "Count": 100
+    },
+    {
+      "Name": "EnemyHeavy",
+      "Count": 100
+    },
+    {
+      "Name": "EnemyLiar",
+      "Count": 100
+    },
+    {
+      "Name": "ShadowEnemy",
+      "Count": 100
+    }
+  ],
+  "LazerEnemy": [
+    {
+      "Name": "LazerSimple",
+      "Count": 5
+    }
+  ],
+  "Map": "Map1",
+  "CutScene": "IntroLvl1",
+  "ColdStart": false
+
+}

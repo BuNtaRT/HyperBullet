@@ -15,6 +15,7 @@ public class SpawnSpell : MonoBehaviour
     {
         if (Application.isEditor)
             SSO = DebugSpellLiost;
+
         foreach (var item in SSO)
         {
             _lvlSpell.Add(item, false);

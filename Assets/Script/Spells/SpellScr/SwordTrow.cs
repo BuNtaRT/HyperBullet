@@ -5,32 +5,26 @@ using UnityEngine;
 
 public class SwordTrow : SpellBase
 {
-    Transform _mapContainer;
+
     [SerializeField]
     Transform _swordSp;
     [SerializeField]
-
+    //слуд в какую сторону летит меч
     Transform _trace;
     protected override void InitOverride()
     {
-        Debug.Log("Init Sword");
         CutScene.Instance.Show(_spell.Animation,EndAnimation);
-
     }
 
-    void EndAnimation() 
+    protected override void EndAnimation() 
     {
-        _mapContainer = CutScene.Instance.GetMapContainer();
-
+        base.EndAnimation();
         _trace = Instantiate(Resources.Load<GameObject>(ResourcePath.SPELL_RES + "Trace"),_mapContainer).transform;
-       
-        _trace.position = new Vector3(0,0.5f,0);
-        _trace.LookAt(_touchPoint);
-        _trace.eulerAngles = new Vector3(0, _trace.eulerAngles.y,0);
+
+        LookAtProp(_trace);
 
         _swordSp = Instantiate(Resources.Load<GameObject>(ResourcePath.SPELL_RES + "SwordMiniSp")).transform;
         _swordSp.gameObject.SetActive(false);
-        Debug.Log("init sword End animarion");
         StartCoroutine(SwordAnim());
     }
 
@@ -49,7 +43,7 @@ public class SwordTrow : SpellBase
         _swordSp.DORotate(new Vector3(0,1080,0),2,RotateMode.FastBeyond360);
         yield return new WaitForSeconds(0.5f);
         spriteTrace.DOColor(new Color(tC.r, tC.g, tC.b, 0), 0.2f);
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(1.7f);  
         Destroy();
     }
 

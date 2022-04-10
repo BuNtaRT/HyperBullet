@@ -11,22 +11,40 @@ public class LoadLvl : MonoBehaviour
     [SerializeField]
     PlayableAsset _introScene;
     [SerializeField]
-    GameObject _mapContainet;
+    GameObject    _mapContainet;
     [SerializeField]
-    GameObject _playerObj;
+    GameObject    _playerObj;
+
     public GameObject   SpawnerEnemy ;
     public SpawnSpell   SpawnerSpells;
            bool         _coldStart   ;
+    ConfigLevel         _jsonConfig = null;
 
-
+    [Serializable]
+    class ConfigLevel
+    {
+        public Enemy[] RoboEnemy;
+        public Enemy[] LazerEnemy;
+        public string  Map;
+        public bool    ColdStart;
+        public string  CutScene;
+    }
+    [Serializable]
+    class Enemy 
+    {
+        public string Name;
+        public int Count;
+    }
     private void Awake()
     {
-        LoadEnemyFromConfig();
+        _jsonConfig = JsonUtility.FromJson<ConfigLevel>(Resources.Load<TextAsset>(ResourcePath.LVL_CONFIG + PlayerPrefs.GetInt(PlayerPKey.LVL)).text);
+
+        LoadEnemy();
         LoadCurretSpell();
 
         BulletBase.SetDefault();
 
-        SetMap();
+        LoadMap();
     }
 
     void Start()
@@ -58,54 +76,30 @@ public class LoadLvl : MonoBehaviour
     #endregion
 
     #region Load Enemy config
-    struct EnemyLoad
+
+    void LoadEnemy() 
     {
-        public string Type;
-        public int    Count;
+        LoadRoboEnemy();
     }
-    void LoadEnemyFromConfig() 
-    {
-        List<EnemyLoad> enemyList = new List<EnemyLoad>();
-        XmlDocument loadXml = new XmlDocument();
-        TextAsset xmlFile   = Resources.Load<TextAsset>(ResourcePath.LVL_CONFIG + PlayerPrefs.GetInt(PlayerPKey.LVL));
-
-        loadXml.LoadXml(xmlFile.text);
-        XmlElement rootXml = loadXml.DocumentElement;
-
-        foreach (XmlNode temp in rootXml)
-        {
-            EnemyLoad tempEnemy = new EnemyLoad();
-            if (temp.Attributes.Count > 0)
-            {
-                tempEnemy.Type = temp.Attributes.GetNamedItem("type").Value;
-            }
-
-            tempEnemy.Count = XmlConvert.ToInt32(temp.SelectSingleNode("count").InnerText);
-
-            if (tempEnemy.Count != 0)
-                enemyList.Add(tempEnemy);
-        }
-        SendToSpawner(enemyList);
-    }
-    void SendToSpawner(List<EnemyLoad> enemyList) 
+    void LoadRoboEnemy() 
     {
         SpawnerEnemy spawner = SpawnerEnemy.GetComponent<SpawnerEnemy>();
-        foreach (EnemyLoad tempLoad in enemyList) 
+        foreach (Enemy temp in _jsonConfig.RoboEnemy)
         {
-            GameObject tempObjBeh = Instantiate(Resources.Load<GameObject>(ResourcePath.ENEMY_BEHAIVOR + tempLoad.Type));
-            EnemyAIBase tempeEnemyAI = tempObjBeh.GetComponent<EnemyAIBase>();
-            spawner.AddNewBehaivor(tempeEnemyAI,tempLoad.Count);
-            //Destroy(tempObjBeh);
+                GameObject tempObjBeh = Instantiate(Resources.Load<GameObject>(ResourcePath.ENEMY_BEHAIVOR + temp.Name));
+                EnemyAIBase tempeEnemyAI = tempObjBeh.GetComponent<EnemyAIBase>();
+                spawner.AddNewBehaivor(tempeEnemyAI, temp.Count);
         }
     }
+
     #endregion
 
     #region Load Visual
     public void ColdStart(bool val) => _coldStart = val;
-    void SetMap()
+    void LoadMap()
     {
-        Debug.Log(ResourcePath.LVLS + "Map1");
-        GameObject map = Instantiate(Resources.Load<GameObject>(ResourcePath.LVLS + "Map1"), _mapContainet.transform);
+        Debug.Log(ResourcePath.LVLS + _jsonConfig.Map);
+        GameObject map = Instantiate(Resources.Load<GameObject>(ResourcePath.LVLS + _jsonConfig.Map), _mapContainet.transform);
     }
 
     void StartIntro()
@@ -113,7 +107,7 @@ public class LoadLvl : MonoBehaviour
         if (_coldStart)
             EndIntro();
         else
-            CutScene.Instance.Show(Resources.Load<PlayableAsset>(ResourcePath.CUT_SCENE + "IntroLvl1"), EndIntro);
+            CutScene.Instance.Show(Resources.Load<PlayableAsset>(ResourcePath.CUT_SCENE + _jsonConfig.CutScene), EndIntro);
     }
     void EndIntro()
     {

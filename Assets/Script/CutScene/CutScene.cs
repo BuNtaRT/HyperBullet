@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,11 @@ public class CutScene : MonoBehaviour
     [SerializeField]
     Transform        _builds      ;
 
+
+    [SerializeField]
+    GameObject _camera;
+    [SerializeField]
+    GameObject _player;
 
     public static CutScene Instance;
 
@@ -57,6 +63,8 @@ public class CutScene : MonoBehaviour
 
     IEnumerator EndScene(double time, Action callback, bool showMap) 
     {
+        ChangeActiveObject(false);
+
         Debug.Log(_builds.gameObject.name);
         _builds.gameObject.SetActive(showMap);
         _director.gameObject.SetActive(true);
@@ -72,5 +80,12 @@ public class CutScene : MonoBehaviour
         }
         _builds.gameObject.SetActive(false);
 
+        ChangeActiveObject(true);
+    }
+
+    void ChangeActiveObject(bool enable) 
+    {
+        _camera.GetComponent<CinemachineBrain>().enabled = enable;
+        _player.SetActive(enable);
     }
 }

@@ -1,0 +1,22 @@
+<LvlConfig>
+	<enemys type="roboEnemy">
+		<enemy type="EnemySimple">
+			<count>100</count>
+		</enemy>
+		<enemy type="EnemyFast">
+			<count>30</count>
+		</enemy>
+		<enemy type="EnemySmart">
+			<count>30</count>
+		</enemy>
+		<enemy type="EnemyHeavy">
+			<count>20</count>
+		</enemy>
+		<enemy type="EnemyLiar">
+			<count>30</count>
+		</enemy>
+		<enemy type="ShadowEnemy">
+			<count>30</count>
+		</enemy>
+	</enemys>
+</LvlConfig>

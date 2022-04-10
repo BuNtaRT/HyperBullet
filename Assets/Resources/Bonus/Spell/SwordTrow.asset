@@ -14,8 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameRU: "\u0411\u0440\u043E\u0441\u043E\u043A \u043C\u0435\u0447\u0430"
   NameEU: Sword throw
+  DefaultPrice: 0
   Price: 3
+  MarketPrice: 0
   NameSc: 0
   Area: 60
   Ico: {fileID: 21300000, guid: 63ad901867533174aa931eeef420d64b, type: 3}
   Animation: {fileID: 11400000, guid: ba7ea775a12f61d45b81609400cb857f, type: 2}
+  Lvl: 1
+  DescriptionLvl_RU: 1
+  DescriptionLvl2_RU: 1
+  DescriptionLvl3_RU: 1

@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class ClonePlayer : MonoBehaviour
 {
-    [SerializeField] Transform _player;
-    [SerializeField] Transform _clone1;
-    [SerializeField] Transform _clone2;
+    [SerializeField]
+    private Transform _player;
+    [SerializeField]
+    private Transform _clone1;
+    [SerializeField]
+    private Transform _clone2;
 
     public static ClonePlayer Instance { get; private set; }
 
@@ -23,6 +26,7 @@ public class ClonePlayer : MonoBehaviour
         _player.position = new Vector3(_player.position.x,_player.position.y,0.35f);
         _clone1.gameObject.SetActive(true);
     }
+
     public void ClonePerkDisable()
     {
         _player.position = new Vector3(_player.position.x, _player.position.y, 0);

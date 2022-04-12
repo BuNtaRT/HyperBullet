@@ -5,32 +5,32 @@ using UnityEngine.UI;
 public class DevSc : MonoBehaviour
 {
     [SerializeField]
-    bool IntroColdStart;
+    private bool               _introColdStart;
     [SerializeField]
-    PlayerPKey.langKey language;
+    private PlayerPKey.langKey _language;
     [SerializeField]
-    Transform fixTransform;
+    private Transform          _fixTransform;
     [SerializeField]
-    int curretLvl;
-    public Dropdown SpellDropDown;
+    private int                _curretLvl;
+    public Dropdown            SpellDropDown;
     [SerializeField]
-    float BulletOnSession;
+    private float              _bulletOnSession;
 
     [SerializeField]
-    LoadLvl loaderLvl;
+    private LoadLvl            _loaderLvl;
 
-    void Awake()
+    private void Awake()
     {
-        PlayerPrefs.SetInt(PlayerPKey.LVL, curretLvl);
-        PlayerPrefs.SetInt(PlayerPKey.LANGUAGE, (int)language);
+        PlayerPrefs.SetInt(PlayerPKey.LVL, _curretLvl);
+        PlayerPrefs.SetInt(PlayerPKey.LANGUAGE, (int)_language);
         PlayerPrefs.SetFloat(PlayerPKey.SPEED_UP, 0);
         PlayerPrefs.Save();
-        loaderLvl.ColdStart(IntroColdStart);
-
+        _loaderLvl.ColdStart(_introColdStart);
     }
+
     private void Start()
     {
-        SessionBullet.Instance.Add(BulletOnSession);
+        SessionBullet.Instance.Add(_bulletOnSession);
     }
 
     public PerksUI PerkUI;
@@ -48,18 +48,19 @@ public class DevSc : MonoBehaviour
         //GlobalEventsManager.SendSpell(temp);
     }
 
-    bool _pause=false;
+    private bool _pause = false;
     public void CutPause() 
     {
         _pause = !_pause;
         GlobalEventsManager.InvokPause(PauseStatus.cutScene,_pause);
     }
+
     public void PausePause() 
     {
         _pause = !_pause;
         GlobalEventsManager.InvokPause(PauseStatus.pause, _pause);
-
     }
+
     public void PickPause() 
     {
         _pause = !_pause;

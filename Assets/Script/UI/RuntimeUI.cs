@@ -40,7 +40,7 @@ public class RuntimeUI : MonoBehaviour
             StartCoroutine(MessageShower());
     }
 
-    IEnumerator MessageShower()
+    private IEnumerator MessageShower()
     {
         _messageText.gameObject.SetActive(true);
         _isShowMessNow = true;
@@ -65,5 +65,4 @@ public class RuntimeUI : MonoBehaviour
     {
         _startLogo.Show();
     }
-
 }

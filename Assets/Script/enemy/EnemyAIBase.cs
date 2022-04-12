@@ -9,10 +9,9 @@ public class EnemyAIBase : MonoBehaviour
     protected EnemyObj   _enemyObj          ;
     public    bool       InSphere = false   ;
     public    Transform  GoTo               ;
-              Vector3    _enemySpawnPosition;
-              sbyte      _hp   = 2          ;
-              bool       _pause = false     ;
-
+    private   Vector3    _enemySpawnPosition;
+    private   sbyte      _hp   = 2          ;
+    private   bool       _pause = false     ;
 
     void Start()
     {
@@ -73,7 +72,7 @@ public class EnemyAIBase : MonoBehaviour
         _enemyObj.SlowTimeEnable(enable);
     }
 
-    void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("ExplBullet"))
         {
@@ -83,14 +82,15 @@ public class EnemyAIBase : MonoBehaviour
             }
         }
     }
-    void Die()
+
+    private void Die()
     {
         StopAllCoroutines();
         gameObject.GetComponent<Animator>().enabled = true;
         _enemyObj.Die();
     }
 
-    void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other) 
     {
 
         if (other.CompareTag("Bullet"))
@@ -113,16 +113,16 @@ public class EnemyAIBase : MonoBehaviour
         }
     }
 
-    float timeToPointPlayer;
-    IEnumerator Go()
+    private float _timeToPointPlayer;
+    private IEnumerator Go()
     {
         float distance = Vector3.Distance(_enemySpawnPosition, GoTo.position);
-        timeToPointPlayer = distance / _enemyObj.MoveSpeed;
+        _timeToPointPlayer = distance / _enemyObj.MoveSpeed;
 
         float timeSteap = 0f;
         while (timeSteap < 1.0f)
         {
-            timeSteap += Time.deltaTime / timeToPointPlayer / _enemyObj.SpeedAnim;
+            timeSteap += Time.deltaTime / _timeToPointPlayer / _enemyObj.SpeedAnim;
             gameObject.transform.position = Vector3.Lerp(_enemySpawnPosition, GoTo.position, timeSteap);
             yield return null;
 
@@ -137,39 +137,42 @@ public class EnemyAIBase : MonoBehaviour
         LookAt();
         StartCoroutine(Go());
     }
+
 /*------------------------Modification-------------------------------*/
-    float _timeEmi;
-    bool  _emiEnable = false;
-    void EmiBullet() 
+    private float _timeEmi;
+    private bool  _emiEnable = false;
+    private void EmiBullet() 
     {
         if (!_emiEnable)
             StartCoroutine(EmiDebaff());
         else
             _timeEmi += 1;
     }
-    IEnumerator EmiDebaff() 
+
+    private IEnumerator EmiDebaff() 
     {
         _timeEmi = 1;
         _emiEnable = true;
-        float timetemp = timeToPointPlayer;
-        timeToPointPlayer = 100;
+        float timetemp = _timeToPointPlayer;
+        _timeToPointPlayer = 100;
         Animator enemyAnimator = gameObject.GetComponent<Animator>();
         enemyAnimator.enabled = false;
         yield return new WaitForSeconds(_timeEmi);
         enemyAnimator.enabled = true;
         _emiEnable = false;
-        timeToPointPlayer = timetemp;
+        _timeToPointPlayer = timetemp;
     }
+
 //-----------------------------------------------------------------------
-    void SlowSpeed() 
+    private void SlowSpeed() 
     {
         StartCoroutine(SlowONSec());
     }
 
-    IEnumerator SlowONSec() 
+    private IEnumerator SlowONSec() 
     {
-        timeToPointPlayer = timeToPointPlayer * 4;
+        _timeToPointPlayer = _timeToPointPlayer * 4;
         yield return new WaitForSeconds(1f);
-        timeToPointPlayer = timeToPointPlayer / 4;
+        _timeToPointPlayer = _timeToPointPlayer / 4;
     }
 }

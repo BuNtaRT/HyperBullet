@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class HpLine 
 {
-    static int            _iCallRoad = 0;           //every 5 call hp be drawed
-    static Color          _roadColor = new Color();
-    static SpriteRenderer _maskRoad;
+    private static int            _iCallRoad = 0;           //every 5 call hp be drawed
+    private static Color          _roadColor = new Color();
+    private static SpriteRenderer _maskRoad;
 
     public static void init(SpriteRenderer maskRoad) 
     {

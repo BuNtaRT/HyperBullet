@@ -8,12 +8,15 @@ public class SpellPointer : MonoBehaviour
 {
     //Management graphic pointer and send deg to Cell maneger
     //Controll Spell pointer (Oh realy??)
-    [SerializeField] SpellCells     _spellCells;
-    [SerializeField] SpriteRenderer _pointerSp;
-    [SerializeField] Transform      _poinet;
-                     bool           _enablePointer = false;
-                     bool           _hightStatus   = false;
-                     bool           _closeLast     = true ;
+    [SerializeField]
+    private SpellCells     _spellCells;
+    [SerializeField]
+    private SpriteRenderer _pointerSp;
+    [SerializeField]
+    private Transform      _poinet;
+    private bool           _enablePointer = false;
+    private bool           _hightStatus   = false;
+    private bool           _closeLast     = true ;
 
     public void LookAt(Vector3 dot,bool close) 
     {
@@ -49,10 +52,9 @@ public class SpellPointer : MonoBehaviour
 
         _enablePointer = false;
         ShowPointer(false);
-        
     }
 
-    void StartUseCells()
+    private void StartUseCells()
     {
         _closeLast = true;
         _enablePointer = true;
@@ -60,17 +62,16 @@ public class SpellPointer : MonoBehaviour
         ShowPointer(true);
     }
 
-    void ShowPointer(bool enable) 
+    private void ShowPointer(bool enable) 
     {
 
             float alpha = enable ? 1 : 0;
             _pointerSp.DOColor(new Color(_pointerSp.color.r, _pointerSp.color.g, _pointerSp.color.b, alpha), 0.6f).SetUpdate(true);
             _pointerSp.enabled = true;
             _hightStatus = enable;
-        
     }
 
-    float CalcDeg(Vector3 dot) 
+    private float CalcDeg(Vector3 dot) 
     {
         Vector3 clearCoordinate = dot.normalized;
         return Mathf.Atan2(clearCoordinate.x, clearCoordinate.z) * Mathf.Rad2Deg;

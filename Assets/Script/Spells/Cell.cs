@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Cell : MonoBehaviour
 {
-    class Saturation
+    private class Saturation
     {
         public const float DisableSP   = 0.3f;
         public const float EnableSP    = 0.7f;
@@ -19,14 +19,14 @@ public class Cell : MonoBehaviour
     }
 
     [SerializeField]
-    Text           _priceText;
-    SpriteRenderer _sprite;
-    float          _price;
-    SpellSO        _spell;
+    private Text           _priceText;
+    private SpriteRenderer _sprite;
+    private float          _price;
+    private SpellSO        _spell;
 
 
-    const float BIG_SCALE_CELL    = 1.05f;
-    const float NORMAL_SCALE_CELL = 0.6f;
+    private const float BIG_SCALE_CELL    = 1.05f;
+    private const float NORMAL_SCALE_CELL = 0.6f;
 
     private void Awake()
     {

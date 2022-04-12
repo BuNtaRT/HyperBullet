@@ -19,9 +19,7 @@ public class SpellSO : ScriptableObject
     public string DescriptionLvl_RU;
     public string DescriptionLvl2_RU;
     public string DescriptionLvl3_RU;
-    
 }
-
 
 public enum SpellScName
 {

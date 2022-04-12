@@ -7,8 +7,9 @@ public class TwoX_Damage : MonoBehaviour, IPerk
     public void InitPerk()
     {
         BulletBase.SetDamage(4);
-        BulletBase.SetColor(ColorToGradient.Convert(new Color(1,0.043f,0)));
+        BulletBase.SetColor(new Color(1,0.043f,0).ConvertToGradient());
     }
+
     public void DestroyPerk()
     {
         BulletBase.SetDefault();

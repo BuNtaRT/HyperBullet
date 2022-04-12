@@ -6,7 +6,7 @@ public class TwoX_PowerBullet : MonoBehaviour, IPerk
 {
     public void InitPerk()
     {
-        BulletBase.SetColor(ColorToGradient.Convert(new Color(0, 0.6f, 1f)));
+        BulletBase.SetColor(new Color(0, 0.6f, 1f).ConvertToGradient());
         BulletBase.SetHp(2);
     }
 

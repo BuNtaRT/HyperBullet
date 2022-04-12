@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySmart : EnemyAIBase
 {
-    float _angleSave;
+    private float _angleSave;
 
     protected override Color SetColor()
     {
@@ -34,7 +34,7 @@ public class EnemySmart : EnemyAIBase
         _angleSave = Mathf.Atan2(transform.position.x,transform.position.z)* Mathf.Rad2Deg;
     }
 
-    void InitDodge()
+    private void InitDodge()
     {
         if((Random.Range(0,51) >= 25 || _angleSave <=21) && _angleSave <= 339)
             SetRot(_angleSave + Random.Range(10, 20));
@@ -43,7 +43,7 @@ public class EnemySmart : EnemyAIBase
         RePosition();
     }
 
-    void SetRot(float angle) 
+    private void SetRot(float angle) 
     {
         _angleSave = angle;
         float radius = Vector3.Distance(GoTo.position, transform.position);

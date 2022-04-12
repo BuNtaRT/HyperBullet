@@ -14,8 +14,8 @@ public class GlobalEventsManager : MonoBehaviour
     public static UnityEvent<Transform> OnEnemyKill = new UnityEvent<Transform>();
     public static void SendEnemyKill(Transform pos) => OnEnemyKill.Invoke(pos);
     //---------------------------------------------------------------------------------------------------
-    static bool _pauseStatus = false;
-    static float _lastTimeScale = 1f;
+    private static bool  _pauseStatus = false;
+    private static float _lastTimeScale = 1f;
     public static UnityEvent<PauseStatus,bool> OnPause = new UnityEvent<PauseStatus,bool>();
     public static void InvokPause(PauseStatus status, bool enable)
     {
@@ -30,6 +30,5 @@ public class GlobalEventsManager : MonoBehaviour
         }
     }
     //---------------------------------------------------------------------------------------------------
-
 }
 

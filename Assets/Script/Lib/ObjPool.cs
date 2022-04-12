@@ -13,11 +13,11 @@ public enum TypeObj : byte
 
 public class ObjPool : MonoBehaviour
 {
-    GameObject _overSpawnCell;
-    GameObject _mainContainer;
+    private GameObject _overSpawnCell;
+    private GameObject _mainContainer;
     public static ObjPool Instance { get; private set; }
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
             Instance = this;
@@ -26,7 +26,8 @@ public class ObjPool : MonoBehaviour
 
         GlobalEventsManager.OnPause.AddListener(PauseSub);
     }
-    void PauseSub(PauseStatus status, bool enable) 
+
+    private void PauseSub(PauseStatus status, bool enable) 
     {
         if (status == PauseStatus.cutScene) 
         {
@@ -44,7 +45,6 @@ public class ObjPool : MonoBehaviour
         }
     }
 
-
     [Serializable]
     public struct ObjectsInfo 
     {
@@ -54,11 +54,10 @@ public class ObjPool : MonoBehaviour
     }
 
     [SerializeField]
-    List<ObjectsInfo> _objectsInfo = new List<ObjectsInfo>();
+    private List<ObjectsInfo> _objectsInfo = new List<ObjectsInfo>();
+    private Dictionary<TypeObj, Queue<GameObject>> poolDictionary;
 
-    Dictionary<TypeObj, Queue<GameObject>> poolDictionary;
-
-    void Start()
+    private void Start()
     {
         _mainContainer = new GameObject();
         _mainContainer.name = "SpawnerContainer";
@@ -85,6 +84,7 @@ public class ObjPool : MonoBehaviour
             poolDictionary.Add(temp.Type, tempQueue);
         }
     }
+
     public Transform SpawnObj(TypeObj type, Vector3 position) 
     {
         if (poolDictionary[type].Count != 0)
@@ -103,6 +103,7 @@ public class ObjPool : MonoBehaviour
             return tempObj.transform;
         }
     }
+
     public void Destroy(TypeObj type, GameObject obj) 
     {
         obj.SetActive(false);

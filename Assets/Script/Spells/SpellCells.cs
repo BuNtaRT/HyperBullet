@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpellCells : MonoBehaviour
 {
-    class Degrees
+    private class Degrees
     {
         public int MaxValue;
         public int MinValue;
@@ -18,13 +18,13 @@ public class SpellCells : MonoBehaviour
     }
 
     // controll spellCell (image, script, activation) !! queue important !!
-             [SerializeField] 
-             List<Cell>                _cells;
-    readonly Dictionary<int, Degrees> _degress      = new Dictionary<int, Degrees>();
-             int                      _lastSite     = -1;
-             bool                     _hide         = false;
-            
-    void Awake()
+    [SerializeField]
+    private  List<Cell>               _cells;
+    readonly Dictionary<int, Degrees> _degress  = new Dictionary<int, Degrees>();
+    private  int                      _lastSite = -1;
+    private  bool                     _hide     = false;
+
+    private void Awake()
     {
         _degress.Add(0, new Degrees() { MinValue = 0, MaxValue = 90 });
         _degress.Add(1, new Degrees() { MinValue = 91, MaxValue = 180 });
@@ -98,7 +98,7 @@ public class SpellCells : MonoBehaviour
             item.EndState();
         }
     }
-    int ReSearche(float deg) // осуществяем полный поиск по углу и возвращаем сторону
+    private int ReSearche(float deg) // осуществяем полный поиск по углу и возвращаем сторону
     {
         foreach (var item in _degress)
         {
@@ -110,14 +110,11 @@ public class SpellCells : MonoBehaviour
         return 0;
     }
 
-    void ReadyCell(bool ready,int index) 
+    private void ReadyCell(bool ready,int index) 
     {
         if (index != -1)
         {
             _cells[index].ReadyState(ready);
         }
     }
-
-
-
 }

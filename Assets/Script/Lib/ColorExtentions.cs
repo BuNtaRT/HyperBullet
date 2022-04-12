@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ColorToGradient
+public static class ColorExtentions
 {
-    public static Gradient Convert(Color color) 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="color">Entry color</param>
+    /// <returns>Gradient(entry color alpha=1, entry color alpha=0)</returns>
+    public static Gradient ConvertToGradient(this Color color)
     {
         Gradient gradient = new Gradient();
         GradientColorKey[] colorKey = new GradientColorKey[1];

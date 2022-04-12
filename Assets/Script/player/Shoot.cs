@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    public GameObject Player;
-    string            _modifiedMethod = "";
-    int               _iClone;
-    float             _curretPrice;
+    public  GameObject Player;
+    private string     _modifiedMethod = "";
+    private int        _iClone;
+    private float      _curretPrice;
     public static Shoot Instance { get; private set; }
 
     private void Awake()
@@ -16,9 +16,7 @@ public class Shoot : MonoBehaviour
             Instance = this;
         else
             Debug.LogError("Instance obj over 1");
-
     }
-
 
     public void PLayerShoot(Vector3 positionShoot)
     {
@@ -49,19 +47,20 @@ public class Shoot : MonoBehaviour
     {
         _modifiedMethod = method;
     }
+
     public void ClearModified() 
     {
         _modifiedMethod = "";
     }
 
     /*-----------------MODIFICATION-----------------*/
-    bool _slowMoPlay;
-    void SlowMo() 
+    private bool _slowMoPlay;
+    private void SlowMo() 
     {
         if(!_slowMoPlay)
             StartCoroutine(SlowMotion());
     }
-    IEnumerator SlowMotion() 
+    private IEnumerator SlowMotion() 
     {
         _slowMoPlay = true;
         Time.timeScale = 0.3f;
@@ -76,6 +75,7 @@ public class Shoot : MonoBehaviour
         Debug.LogWarning("this Working WHAT THIS DOING ????");
         _iClone = 1;
     }
+
     public void PlayerCloneDisable()
     {
         Debug.LogWarning("this Working WHAT THIS DOING ????");

@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class PlayAnim : MonoBehaviour
 {
-    [SerializeField] string nameAnimation;
-    Animator animator;
+    [SerializeField]
+    private string   _nameAnimation;
+    private Animator _animator;
 
     private void Start()
     {
-        animator = gameObject.GetComponent<Animator>();
+        _animator = gameObject.GetComponent<Animator>();
     }
 
     private void OnValidate()
     {
-        gameObject.GetComponent<Animator>().Play(nameAnimation);
+        gameObject.GetComponent<Animator>().Play(_nameAnimation);
     }
 }

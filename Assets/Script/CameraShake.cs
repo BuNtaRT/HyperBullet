@@ -8,8 +8,9 @@ public class CameraShake : MonoBehaviour
     //скрипт весящий на Виртуальной камере - отвечает за тряску 
 
     public static CameraShake Instance { get; private set; }
-    float                     _intensive = 1.2f;
-    CinemachineVirtualCamera  _virtualCam;
+
+    private float                    _intensive = 1.2f;
+    private CinemachineVirtualCamera _virtualCam;
 
     private void Start()
     {
@@ -22,7 +23,7 @@ public class CameraShake : MonoBehaviour
         StartCoroutine(shakeIenum(time));
     }
 
-    IEnumerator shakeIenum(float time) 
+    private IEnumerator shakeIenum(float time) 
     {
         CinemachineBasicMultiChannelPerlin CMCP = _virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
@@ -34,7 +35,5 @@ public class CameraShake : MonoBehaviour
             CMCP.m_AmplitudeGain = progress;
             yield return null;
         }
-
     }
-
 }

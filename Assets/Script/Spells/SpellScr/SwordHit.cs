@@ -5,25 +5,25 @@ using UnityEngine;
 
 public class SwordHit : SpellBase
 {
-    Transform _wave;
-    float speed;
-    float distance;
+    private Transform _wave;
+    private float     _speed;
+    private float     _distance;
 
     protected override void LvlSpellInit() 
     {
         switch (_spell.Lvl)
         {
             case 1:
-                speed = 1;
-                distance = 5;
+                _speed = 1;
+                _distance = 5;
                 break;
             case 2:
-                speed = 1.2f;
-                distance = 10;
+                _speed = 1.2f;
+                _distance = 10;
                 break;
             case 3:
-                speed = 1.8f;
-                distance = 13;
+                _speed = 1.8f;
+                _distance = 13;
                 break;
             default:
                 break;
@@ -43,15 +43,14 @@ public class SwordHit : SpellBase
         LookAtProp(_wave);
         SpriteRenderer waveSp = _wave.GetChild(0).GetComponent<SpriteRenderer>();
         Sequence sequence = DOTween.Sequence().OnComplete(() => Destroy());
-        sequence.Insert(0,_wave.DOMove(_touchPoint.normalized * distance, 2/speed));
-        sequence.Insert(0, _wave.DOScale(new Vector3(3.5f, 3.5f, 3.5f), 2/speed));
-        sequence.Insert(1.6f/speed, waveSp.DOColor(new Color(waveSp.color.r, waveSp.color.g, waveSp.color.b,0), 0.4f/speed));
+        sequence.Insert(0,_wave.DOMove(_touchPoint.normalized * _distance, 2/_speed));
+        sequence.Insert(0, _wave.DOScale(new Vector3(3.5f, 3.5f, 3.5f), 2/_speed));
+        sequence.Insert(1.6f/_speed, waveSp.DOColor(new Color(waveSp.color.r, waveSp.color.g, waveSp.color.b,0), 0.4f/_speed));
     }
 
-    void Destroy() 
+    private void Destroy() 
     {
         Destroy(_wave.gameObject);
         Destroy(gameObject);
     }
-
 }

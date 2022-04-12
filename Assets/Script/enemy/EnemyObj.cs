@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class EnemyObj : MonoBehaviour
 {
-    public float SpeedAnim { get; private set; }
-    public float MoveSpeed { get; private set; }
-    Animator       _anim;
-    BoxCollider    _boxCollider;
-    GameObject     _helmet;        // For CastScene
-    Light          _true_light;
-    SpriteRenderer _fake_light;
-    GameObject     _lod_4;
+    public float           SpeedAnim { get; private set; }
+    public float           MoveSpeed { get; private set; }
+    private Animator       _anim;
+    private BoxCollider    _boxCollider;
+    private GameObject     _helmet;        // For CastScene
+    private Light          _true_light;
+    private SpriteRenderer _fake_light;
+    private GameObject     _lod_4;
 
-    EnemyAIBase    _currEnemyAI;
+    private EnemyAIBase    _currEnemyAI;
 
     public void ReInit(EnemyAIBase enemyAIBase) 
     {
@@ -26,7 +26,6 @@ public class EnemyObj : MonoBehaviour
         SpeedAnim            = 1;
 
         ChangeLayer((int)ObjLayer.PropLight);
-
     }
 
     private void Awake()
@@ -40,7 +39,6 @@ public class EnemyObj : MonoBehaviour
         _true_light.gameObject.SetActive(false);
     }
 
-
     private void Start()
     {
         //ShowCastScene(false);
@@ -51,6 +49,7 @@ public class EnemyObj : MonoBehaviour
         _fake_light.color = color;
         _true_light.color = color;
     }
+
     public void SetSpeed(float speed) 
     {
         MoveSpeed = speed;
@@ -66,7 +65,7 @@ public class EnemyObj : MonoBehaviour
             _helmet.layer = 9;
     }
 
-    float _defaultSpeed;
+    private float _defaultSpeed;
     void SlowSpeedModify(float slowX)
     {
         if (slowX == 0)
@@ -108,11 +107,13 @@ public class EnemyObj : MonoBehaviour
 
         Destroy(_currEnemyAI);
     }
-    IEnumerator SetActiveFalse()
+
+    private IEnumerator SetActiveFalse()
     {
         yield return new WaitForSeconds(1.1f);
         ObjPool.Instance.Destroy(TypeObj.Enemy,gameObject);
     }
+
     public void Attack()
     {
         _anim.SetBool("Run", false);

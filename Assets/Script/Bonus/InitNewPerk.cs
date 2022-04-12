@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class InitNewPerk : MonoBehaviour
 {
-    GameObject _objForPerk;
-    SpawnPerks _spawnPerk;
+    private GameObject _objForPerk;
+    private SpawnPerks _spawnPerk;
+
     private void Awake()
     {
         _spawnPerk = gameObject.GetComponent<SpawnPerks>();
     }
+
     public void InitPerk(PerkSO curretPerk)
     {
         _spawnPerk.PickItem(curretPerk.name);

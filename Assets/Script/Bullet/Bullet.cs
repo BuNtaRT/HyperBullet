@@ -8,27 +8,30 @@ using Random = UnityEngine.Random;
 
 public class Bullet : MonoBehaviour
 {
-    public bool   IsSplinet;      // если осколок то не применяются модификации
-    sbyte         _hp     = 1;
-    sbyte         _damage = 2;
-    float         _speed  = 1;
-    string        _methodDebaffEnemy  = "";
-    string        _methodModifyBullet = "";
-    Sequence      _seqenceMove;
-    TrailRenderer _trail;
-    Vector3      _enemyPosition;
+    public  bool          IsSplinet;      // если осколок то не применяются модификации
+    private sbyte         _hp     = 1;
+    private sbyte         _damage = 2;
+    private float         _speed  = 1;
+    private string        _methodDebaffEnemy  = "";
+    private string        _methodModifyBullet = "";
+    private Sequence      _seqenceMove;
+    private TrailRenderer _trail;
+    private Vector3       _enemyPosition;
+
     private void Awake()
     {
         _trail = gameObject.GetComponent<TrailRenderer>();
         GlobalEventsManager.OnPause.AddListener(PauseSub);
     }
-    void PauseSub(PauseStatus status, bool enable)
+
+    private void PauseSub(PauseStatus status, bool enable)
     {
         if (status == PauseStatus.cutScene)
         {
             _trail.enabled = !enable;
         }
     }
+
     public void Init(Vector3 end) 
     {
         die       = false;
@@ -43,7 +46,7 @@ public class Bullet : MonoBehaviour
         _seqenceMove.Append(transform.DOMove(end, _speed).OnComplete(() => { Die(); }));
     }
 
-    void SetColorTrail(Gradient gradient) 
+    private void SetColorTrail(Gradient gradient) 
     {
         _trail.colorGradient = gradient;
     }
@@ -55,7 +58,7 @@ public class Bullet : MonoBehaviour
         return Tuple.Create(_damage, _methodDebaffEnemy);
     }
 
-    void TakeDamage() 
+    private void TakeDamage() 
     {
         if (_methodModifyBullet != "" && !IsSplinet)
         {
@@ -73,7 +76,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    bool die = false;
+    private bool die = false;
     void Die() 
     {
         if (!die)
@@ -86,7 +89,7 @@ public class Bullet : MonoBehaviour
 
     /*-----------------MODIFICATION-----------------*/
     //Create 2-3 bullet on one Arncle
-    void BurstingSimple() 
+    private void BurstingSimple() 
     {
         int rand = Random.Range(1, 3);
         for (int i = 0; i <= rand; i++)
@@ -94,12 +97,12 @@ public class Bullet : MonoBehaviour
             SpawnNewBull(5,true);
         }
     }
-    void Ricochet() 
+    private void Ricochet() 
     {
         SpawnNewBull(20,false);
     }
 
-    void BurstingSuper() 
+    private void BurstingSuper() 
     {
         int rand = Random.Range(2, 4);
         for (int i = 0; i <= rand; i++)
@@ -108,13 +111,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void Explosion() 
+    private void Explosion() 
     {
         _enemyPosition = new Vector3(_enemyPosition.x, 0.4f, _enemyPosition.z);
         ObjPool.Instance.SpawnObj(TypeObj.ExplosionFromBullet, _enemyPosition);
     }
 
-    void SpawnNewBull(float radius, bool isSplint) 
+    private void SpawnNewBull(float radius, bool isSplint) 
     {
         Vector3 posNewSplinter = new Vector3(Random.Range(-1f, 1f) * radius, 1, Random.Range(-1f, 1f) * radius);
         posNewSplinter += transform.position;

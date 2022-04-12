@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Extra_Sphere : MonoBehaviour,IPerk
 {
-    Color _pastColor;
+    private Color _pastColor;
     public void InitPerk()
     {
         SphereController.Instance.SetXFactor(0.5f);

@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class EventTransform : UnityEvent<Transform> { }
 
 [Serializable]
-class EnemyBehaviorCount 
+public class EnemyBehaviorCount 
 {
     public int Count;
     public EnemyAIBase Type;
@@ -28,19 +28,19 @@ public class SpawnerEnemy : MonoBehaviour
                                                  {-15f, 16f, 10f, 10.5f  },      //Left
                                                  {-15f, 16f,-10f,-10.5f  } };    //Right
 
-    #region schetchiki
+    #region counters
     [SerializeField]
-    int                  _enemyCountNow = 0;
-    int                  _allAvalibleCount;                       // couint enemy on lvl
-    List<Transform>      _enemyOnGame = new List<Transform>();
+    private int                  _enemyCountNow = 0;
+    private int                  _allAvalibleCount;                       // couint enemy on lvl
+    private List<Transform>      _enemyOnGame = new List<Transform>();
 
     public int             GetCountOnGame()    => _enemyCountNow;
     public List<Transform> GetTransformAlive() => _enemyOnGame;
     public int             GetLeft()           => _allAvalibleCount;
     #endregion
 
-    Transform _gotoEnemy;
-    public EventTransform OnSpawnEnemy = new EventTransform();
+    private Transform      _gotoEnemy;
+    public  EventTransform OnSpawnEnemy = new EventTransform();
     public static SpawnerEnemy Instance { get; private set; }
 
     private void Awake()
@@ -54,9 +54,7 @@ public class SpawnerEnemy : MonoBehaviour
         GlobalEventsManager.OnEnemyKill.AddListener(MinusEnemy);
     }
 
-    
-
-    void Start()
+    private void Start()
     {
         foreach (EnemyBehaviorCount temp in _avalibBehavior) 
         {
@@ -77,7 +75,7 @@ public class SpawnerEnemy : MonoBehaviour
         _avalibBehavior.Add(temp);
     }
 
-    void ChoiseSite() 
+    private void ChoiseSite() 
     {
         if (_allAvalibleCount > 0)
         {
@@ -93,7 +91,8 @@ public class SpawnerEnemy : MonoBehaviour
             CancelInvoke(nameof(ChoiseSite));
         }
     }
-    void Spawn(float x,float z) 
+
+    private void Spawn(float x,float z) 
     {
         Transform Enemy = ObjPool.Instance.SpawnObj(TypeObj.Enemy,new Vector3(x,0,z));
         if (Enemy != null)
@@ -106,7 +105,7 @@ public class SpawnerEnemy : MonoBehaviour
         }
     }
 
-    EnemyAIBase ChoiseBehaivor()
+    private EnemyAIBase ChoiseBehaivor()
     {
         _allAvalibleCount--;
         int chBeh = Random.Range(0, _avalibBehavior.Count);

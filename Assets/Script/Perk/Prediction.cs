@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Prediction : MonoBehaviour, IPerk
 {
-    Queue<Transform> _pointers = new Queue<Transform>();
+    private Queue<Transform> _pointers = new Queue<Transform>();
+
     public void InitPerk()
     {
         for (int i = 0; i < 5; i++)
@@ -16,6 +17,7 @@ public class Prediction : MonoBehaviour, IPerk
         }
         SpawnerEnemy.Instance.OnSpawnEnemy.AddListener(OnSpawnEnemy);
     }
+
     public void DestroyPerk()
     {
         foreach (var item in _pointers)
@@ -26,7 +28,7 @@ public class Prediction : MonoBehaviour, IPerk
         Destroy(gameObject);
     }
 
-    void OnSpawnEnemy(Transform enemy) 
+    private void OnSpawnEnemy(Transform enemy) 
     {
         Transform temp = _pointers.Dequeue();
         if (!temp.gameObject.activeSelf)

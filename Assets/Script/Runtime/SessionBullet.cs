@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class SessionBullet : MonoBehaviour
 {
     //Bullet manager on runtime lvl
-    static public SessionBullet Instance;
-    void Awake()
+    public static SessionBullet Instance;
+
+    private void Awake()
     {
         if (Instance == null)
             Instance = this;
@@ -16,10 +17,9 @@ public class SessionBullet : MonoBehaviour
     }
 
     [SerializeField]
-    int  _bullet = 0;
+    private int  _bullet = 0;
     [SerializeField]
-    Text _bulletText;
-
+    private Text _bulletText;
 
     public void InitBullet(float bullet) 
     {

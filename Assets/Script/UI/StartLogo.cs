@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class StartLogo : MonoBehaviour
 {
-
     public void Show() 
     {
         gameObject.SetActive(true);
         StartCoroutine(ShowLogo());
     }
 
-    IEnumerator ShowLogo() 
+    private IEnumerator ShowLogo() 
     {
         gameObject.GetComponent<Animation>().Play("Start");
         yield return new WaitForSeconds(1.15f);

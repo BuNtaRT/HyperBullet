@@ -8,12 +8,11 @@ public class ItemOnRoadBase : MonoBehaviour
     [SerializeField]
     protected SpriteRenderer _ico;
     [SerializeField]
-    SpriteRenderer    _bg;
-    private   Tween   _anim;
-    protected TypeObj _objectT;
-    private Color   _cB;
-    private Color   _cI;
-
+    private   SpriteRenderer _bg;
+    private   Tween          _anim;
+    protected TypeObj        _objectT;
+    private   Color          _cB;
+    private   Color          _cI;
 
     protected void InitAwake()
     {

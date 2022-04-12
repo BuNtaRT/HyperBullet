@@ -5,15 +5,16 @@ public class SphereController : MonoBehaviour
 {
     //отвечает за хп и макс хп сферы, отключает или включает slowMotion у врагов, а так же отрисовывает свое хп на внутриигровом интерфейсе Road
 
-    float _hpSphere = 5;
-    float _hpCurretSphere;
-    bool  _timerActive = false;
-    float _powerHealing = 0.01f;
+    private float _hpSphere = 5;
+    private float _hpCurretSphere;
+    private bool  _timerActive = false;
+    private float _powerHealing = 0.01f;
     public SpriteRenderer  MaskRoad;
-    [SerializeField] SpriteRenderer  SphereSp;
-    [SerializeField] SpriteRenderer  LightColor;
-    List<EnemyObj>         _enemyList = new List<EnemyObj>();   // те кто подошел достаточно близко
-
+    [SerializeField]
+    private SpriteRenderer _sphereSp;
+    [SerializeField]
+    private SpriteRenderer _lightColor;
+    private List<EnemyObj> _enemyList = new List<EnemyObj>();   // те кто подошел достаточно близко
 
     public static SphereController Instance { get; private set; }
 
@@ -102,9 +103,9 @@ public class SphereController : MonoBehaviour
 
     public Color SetColor(Color newColor) 
     {
-        Color tempPast = SphereSp.color;
-        SphereSp.color = newColor;
-        LightColor.color = newColor;
+        Color tempPast = _sphereSp.color;
+        _sphereSp.color = newColor;
+        _lightColor.color = newColor;
         return tempPast;
     }
 
@@ -121,7 +122,7 @@ public class SphereController : MonoBehaviour
     /// убираем или ставим замедление на врагов
     /// </summary>
     /// <param name="activ">true = активно замедление</param>
-    void ActicateSlowM(bool activ) 
+    private void ActicateSlowM(bool activ) 
     {
         foreach (EnemyObj temp in _enemyList) 
         {
@@ -130,7 +131,7 @@ public class SphereController : MonoBehaviour
     }
 
     // добавляем или удаляем Enemy вошедших в Sphere
-    void AddEnemy(EnemyObj enemy) 
+    private void AddEnemy(EnemyObj enemy) 
     {
         if(!_enemyList.Contains(enemy))
             _enemyList.Add(enemy);

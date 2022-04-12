@@ -8,7 +8,7 @@ public class ChanceBonus : MonoBehaviour
     // шанс на выпадение бонуса
     public int ChanceForBonus = 100;
     // для перков
-    public int ChanceForPerk = 100;
+    public int ChanceForPerk  = 100;
     // для карточных бонусов
     public int ChanceForSpell = 100;
     #endregion

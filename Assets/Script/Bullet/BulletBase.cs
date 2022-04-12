@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
 public static class BulletBase
-{   
+{
     //in this sc contains customize data of bullet
 
-    static BulletData _bulletData;
+    private static BulletData _bulletData;
 
     public static void SetDefault() 
     {
@@ -42,7 +42,6 @@ public static class BulletBase
     {
         return _bulletData;
     }
-
 }
 public struct BulletData
 {

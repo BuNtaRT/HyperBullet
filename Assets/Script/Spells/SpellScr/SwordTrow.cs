@@ -7,10 +7,11 @@ public class SwordTrow : SpellBase
 {
 
     [SerializeField]
-    Transform _swordSp;
+    private Transform _swordSp;
     [SerializeField]
-    //слуд в какую сторону летит меч
-    Transform _trace;
+    //слeд в какую сторону летит меч
+    private Transform _trace;
+
     protected override void InitOverride()
     {
         CutScene.Instance.Show(_spell.Animation,EndAnimation);
@@ -28,7 +29,7 @@ public class SwordTrow : SpellBase
         StartCoroutine(SwordAnim());
     }
 
-    IEnumerator SwordAnim() 
+    private IEnumerator SwordAnim() 
     {
         SpriteRenderer spriteTrace = _trace.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         Color tC = spriteTrace.color;
@@ -53,6 +54,4 @@ public class SwordTrow : SpellBase
         Destroy(_trace.gameObject);
         Destroy(gameObject);
     }
-
-
 }

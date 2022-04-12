@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ShadowEnemy : EnemyAIBase
 {
-    float _timer;
+    private float _timer;
 
     protected override Color SetColor()
     {
@@ -21,7 +21,7 @@ public class ShadowEnemy : EnemyAIBase
         Invoke(nameof(EnableShadowMode), _timer);
     }
 
-    void EnableShadowMode() 
+    private void EnableShadowMode() 
     {
         if (!InSphere)
         {

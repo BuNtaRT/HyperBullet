@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class PerkNI : MonoBehaviour
 {
-    [SerializeField] GameObject     _perkGameObj;
-    [SerializeField] SpriteRenderer _perkIco;
-                     InitNewPerk    _initNewPerk;
-    public static PerkNI Instance;
+    [SerializeField]
+    private       GameObject     _perkGameObj;
+    [SerializeField]
+    private       SpriteRenderer _perkIco;
+    private       InitNewPerk    _initNewPerk;
+    public static PerkNI         Instance;
 
     private void Awake()
     {
@@ -17,9 +19,8 @@ public class PerkNI : MonoBehaviour
         _initNewPerk = gameObject.GetComponent<InitNewPerk>();
     }
 
-
     //управление отображения перка на дороге а так же его активация и деактивация
-    void Show(PerkSO curretPerk) 
+    private void Show(PerkSO curretPerk) 
     {
         if (curretPerk == null)
             _perkGameObj.SetActive(true);
@@ -28,7 +29,8 @@ public class PerkNI : MonoBehaviour
         _perkIco.sprite = curretPerk.Ico;
         _perkGameObj.SetActive(true);
     }
-    void InitPerk(PerkSO curretPerk) 
+
+    private void InitPerk(PerkSO curretPerk) 
     {
         _initNewPerk.InitPerk(curretPerk);
     }
@@ -38,6 +40,4 @@ public class PerkNI : MonoBehaviour
         Show(curretPerk);
         InitPerk(curretPerk);
     }
-
-
 }

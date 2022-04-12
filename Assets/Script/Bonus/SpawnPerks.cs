@@ -9,11 +9,12 @@ public class SpawnPerks : MonoBehaviour
 {
     // спавнит перк из поверженного противника
 
-    [SerializeField] private Dictionary<string, bool> _perks;        // имя PerkSO файла / был ли он выран ранее
-    public                   GameObject               TemplatePerk;
+    [SerializeField] 
+    private Dictionary<string, bool> _perks;        // имя PerkSO файла / был ли он выран ранее
+    public  GameObject               TemplatePerk;
 
     // переиспользуемый обьект для отображения перка на дороге
-    GameObject perkObject;
+    private GameObject perkObject;
 
     //загружаем доступные перки
     private void Awake()
@@ -29,7 +30,7 @@ public class SpawnPerks : MonoBehaviour
     }
 
     // сравнивает имя со списком доступных перков если есть отвечает true 
-    bool AccessibilityPerk(string nameObj)
+    private bool AccessibilityPerk(string nameObj)
     {
         return true;
     }
@@ -41,7 +42,7 @@ public class SpawnPerks : MonoBehaviour
     }
 
     [SerializeField] PerksUI _perksUI;
-    void CallPerkUI(PerkSO choisedPerk) 
+    private void CallPerkUI(PerkSO choisedPerk) 
     {
         _perksUI.PerkNow = choisedPerk;
     }
@@ -80,7 +81,6 @@ public class SpawnPerks : MonoBehaviour
 
         CallPerkUI(newPerk);
     }
-
 
     public void PickItem(string NamePerk) 
     {

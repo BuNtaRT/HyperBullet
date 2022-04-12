@@ -7,9 +7,9 @@ public class SpawnSpell : MonoBehaviour
 {
     // Keep active spell array on session game 
     // Spawn bonus on road
-                             [SerializeField]
-    List<SpellSO>            DebugSpellLiost = new List<SpellSO>();
-    Dictionary<SpellSO,bool> _lvlSpell       = new Dictionary<SpellSO, bool>();
+    [SerializeField]
+    private List<SpellSO>            DebugSpellLiost = new List<SpellSO>();
+    private Dictionary<SpellSO,bool> _lvlSpell       = new Dictionary<SpellSO, bool>();
 
     public void SetSpellList(List<SpellSO> SSO)
     {

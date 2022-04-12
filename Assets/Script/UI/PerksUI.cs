@@ -50,7 +50,7 @@ public class PerksUI : MonoBehaviour
         StartCoroutine(ClosePerks());
     }
 
-    IEnumerator ClosePerks()
+    private IEnumerator ClosePerks()
     {
         yield return new WaitForSecondsRealtime(0.9f);
         GlobalEventsManager.InvokPause(PauseStatus.pickPerk,false);
@@ -89,7 +89,7 @@ public class PerksUI : MonoBehaviour
     }
 
     // цвет карточки устанавливается тут 
-    void ColorPerk() 
+    private void ColorPerk() 
     {
         float H, S, V;
         Color.RGBToHSV(PerkNow.MainColor,out H,out S,out V);

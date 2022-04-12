@@ -4,18 +4,18 @@ using UnityEngine.UI;
 
 public class TapControll : MonoBehaviour
 {
-    public SpawnerEnemy    SpawnerEnemy         ;
-    public SpellPointer    SpellPointer         ;
-           bool            _disable      = false;
-           Shoot           _shoot               ;
-           Vector2         _beganTouch          ;
-           float           _resolCoeff          ;
-           bool            _reqNextPoint = false;
-           Action<Vector3> _nextPointFor        ;
+    public  SpawnerEnemy    SpawnerEnemy         ;
+    public  SpellPointer    SpellPointer         ;
+    private bool            _disable      = false;
+    private Shoot           _shoot               ;
+    private Vector2         _beganTouch          ;
+    private float           _resolCoeff          ;
+    private bool            _reqNextPoint = false;
+    private Action<Vector3> _nextPointFor        ;
 
     public static TapControll Instance;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance != null)
             throw new System.Exception("TapControll install over 1");
@@ -27,19 +27,20 @@ public class TapControll : MonoBehaviour
 
         GlobalEventsManager.OnPause.AddListener(PauseSub);
     }
-    bool _pause = false;
-    void PauseSub(PauseStatus status, bool enable) 
+
+    private bool _pause = false;
+    private void PauseSub(PauseStatus status, bool enable) 
     {
         if(status != PauseStatus.pickSpellDir)
             _pause = enable;
     }
 
-    void Start()
+    private void Start()
     {
         _shoot = Shoot.Instance;
     }
 
-    void Update()
+    private void Update()
     {
         if (!_pause)
         {
@@ -115,11 +116,10 @@ public class TapControll : MonoBehaviour
         _reqNextPoint = true;
     }
 
-    void GivePoint(Vector3 point) 
+    private void GivePoint(Vector3 point) 
     {
         GlobalEventsManager.InvokPause(PauseStatus.pickSpellDir, false);
         _reqNextPoint = false;
         _nextPointFor?.Invoke(point);
     }
-
 }

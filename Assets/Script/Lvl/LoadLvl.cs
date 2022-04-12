@@ -9,19 +9,19 @@ using UnityEngine.Playables;
 public class LoadLvl : MonoBehaviour
 {
     [SerializeField]
-    PlayableAsset _introScene;
+    private PlayableAsset _introScene;
     [SerializeField]
-    GameObject    _mapContainet;
+    private GameObject    _mapContainet;
     [SerializeField]
-    GameObject    _playerObj;
+    private GameObject    _playerObj;
 
-    public GameObject   SpawnerEnemy ;
-    public SpawnSpell   SpawnerSpells;
-           bool         _coldStart   ;
-    ConfigLevel         _jsonConfig = null;
+    public  GameObject    SpawnerEnemy ;
+    public  SpawnSpell    SpawnerSpells;
+    private bool          _coldStart   ;
+    private ConfigLevel   _jsonConfig = null;
 
     [Serializable]
-    class ConfigLevel
+    private class ConfigLevel
     {
         public Enemy[] RoboEnemy;
         public Enemy[] LazerEnemy;
@@ -29,12 +29,14 @@ public class LoadLvl : MonoBehaviour
         public bool    ColdStart;
         public string  CutScene;
     }
+
     [Serializable]
     class Enemy 
     {
         public string Name;
         public int Count;
     }
+
     private void Awake()
     {
         _jsonConfig = JsonUtility.FromJson<ConfigLevel>(Resources.Load<TextAsset>(ResourcePath.LVL_CONFIG + PlayerPrefs.GetInt(PlayerPKey.LVL)).text);
@@ -47,13 +49,13 @@ public class LoadLvl : MonoBehaviour
         LoadMap();
     }
 
-    void Start()
+    private void Start()
     {
         StartIntro();
     }
 
     #region Load Curret Spell
-    void LoadCurretSpell() 
+    private void LoadCurretSpell() 
     {
         List<SpellSO> spells = new List<SpellSO>();
 
@@ -77,11 +79,12 @@ public class LoadLvl : MonoBehaviour
 
     #region Load Enemy config
 
-    void LoadEnemy() 
+    private void LoadEnemy() 
     {
         LoadRoboEnemy();
     }
-    void LoadRoboEnemy() 
+
+    private void LoadRoboEnemy() 
     {
         SpawnerEnemy spawner = SpawnerEnemy.GetComponent<SpawnerEnemy>();
         foreach (Enemy temp in _jsonConfig.RoboEnemy)
@@ -91,32 +94,28 @@ public class LoadLvl : MonoBehaviour
                 spawner.AddNewBehaivor(tempeEnemyAI, temp.Count);
         }
     }
-
     #endregion
 
     #region Load Visual
     public void ColdStart(bool val) => _coldStart = val;
-    void LoadMap()
+    private void LoadMap()
     {
         Debug.Log(ResourcePath.LVLS + _jsonConfig.Map);
         GameObject map = Instantiate(Resources.Load<GameObject>(ResourcePath.LVLS + _jsonConfig.Map), _mapContainet.transform);
     }
 
-    void StartIntro()
+    private void StartIntro()
     {
         if (_coldStart)
             EndIntro();
         else
             CutScene.Instance.Show(Resources.Load<PlayableAsset>(ResourcePath.CUT_SCENE + _jsonConfig.CutScene), EndIntro);
     }
-    void EndIntro()
+    private void EndIntro()
     {
         _playerObj.SetActive(true);
         SpawnerEnemy.SetActive(true);
         RuntimeUI.Instance.ShowStartLogo();
     }
-    
     #endregion
-
-
 }

@@ -8,6 +8,7 @@ public class EnemySimple : EnemyAIBase
     {
         return 1.3f + PlayerPrefs.GetFloat(PlayerPKey.SPEED_UP);
     }
+
     protected override Color SetColor()
     {
         return ColorEnemy.Auaq;

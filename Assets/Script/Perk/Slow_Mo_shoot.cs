@@ -8,6 +8,7 @@ public class Slow_Mo_shoot : MonoBehaviour, IPerk
     {
         Shoot.Instance.SetModified("SlowMo");
     }
+
     public void DestroyPerk()
     {
         Shoot.Instance.ClearModified();

@@ -18,6 +18,7 @@ public class SuperDiscontr : MonoBehaviour,IPerk
         BulletBase.SetColor(trailColor);
         BulletBase.SetModifyBullet("BurstingSuper");
     }
+
     public void DestroyPerk()
     {
         BulletBase.SetDefault();

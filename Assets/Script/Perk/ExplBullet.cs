@@ -7,7 +7,7 @@ public class ExplBullet : MonoBehaviour, IPerk
     public void InitPerk()
     {
         BulletBase.SetModifyBullet("Explosion");
-        BulletBase.SetColor(ColorToGradient.Convert(new Color(0.95f,0,1)));
+        BulletBase.SetColor(new Color(0.95f,0,1).ConvertToGradient());
     }
     public void DestroyPerk()
     {

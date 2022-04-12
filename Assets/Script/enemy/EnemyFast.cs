@@ -8,10 +8,9 @@ public class EnemyFast : EnemyAIBase
     {
         return 2.5f + PlayerPrefs.GetFloat(PlayerPKey.SPEED_UP);
     }
+
     protected override Color SetColor()
     {
         return ColorEnemy.Red;
     }
-
-
 }

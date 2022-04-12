@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class Fps : MonoBehaviour
 {
-    public Text buildNum;
-    public Text fpsText;
-    public Text fpsTotal;
-    int total = 0;
-    public int FPS = 60;
-    public int vSync = 0;
-    void Start()
+    public  Text buildNum;
+    public  Text fpsText;
+    public  Text fpsTotal;
+    private int  total    = 0;
+    public  int  FPS      = 165;
+    public  int  vSync    = 0;
+
+    private void Start()
     {
         if(buildNum!=null)
             buildNum.text = "Build " + Application.version;
@@ -20,9 +21,9 @@ public class Fps : MonoBehaviour
         Application.targetFrameRate = FPS;
     }
 
-    int countUpdate = 0;
-    int TempFps = 0;
-    void Update()
+    private int countUpdate = 0;
+    private int TempFps     = 0;
+    private void Update()
     {
         countUpdate++;
         TempFps += (int)(1f / Time.unscaledDeltaTime);
@@ -30,12 +31,9 @@ public class Fps : MonoBehaviour
         {
             FpsMetr();
         }
-
-
     }
 
-
-    void FpsMetr()
+    private void FpsMetr()
     {
         total += 10;
         fpsText.text = "FPS: " + (TempFps / 10).ToString();
@@ -47,5 +45,4 @@ public class Fps : MonoBehaviour
     {
         fpsTotal.text = "Total Fps: " + total + "\n Average Fps: " +  total/Time.time;
     }
-
 }

@@ -8,21 +8,19 @@ using UnityEngine.Playables;
 public class CutScene : MonoBehaviour
 {
     [SerializeField]
-    PlayableDirector _director    ;
+    private PlayableDirector _director;
     [SerializeField]
-    GameObject       _mapContainer;
-    Transform        _road        ;
-    Transform        _light       ;
+    private GameObject       _mapContainer;
+    private Transform        _road;
+    private Transform        _light;
     [SerializeField]
-    Transform        _builds      ;
+    private Transform        _builds;
+    [SerializeField]
+    private GameObject       _camera;
+    [SerializeField]
+    private GameObject       _player;
 
-
-    [SerializeField]
-    GameObject _camera;
-    [SerializeField]
-    GameObject _player;
-
-    public static CutScene Instance;
+    public static CutScene   Instance;
 
     void Awake()
     {
@@ -32,7 +30,7 @@ public class CutScene : MonoBehaviour
             Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
         Transform loadetMap = _mapContainer.transform.GetChild(0);
 
@@ -60,8 +58,7 @@ public class CutScene : MonoBehaviour
         StartCoroutine(EndScene(entryPlay.duration,callback, showMap));
     }
 
-
-    IEnumerator EndScene(double time, Action callback, bool showMap) 
+    private IEnumerator EndScene(double time, Action callback, bool showMap) 
     {
         ChangeActiveObject(false);
 
@@ -83,7 +80,7 @@ public class CutScene : MonoBehaviour
         ChangeActiveObject(true);
     }
 
-    void ChangeActiveObject(bool enable) 
+    private void ChangeActiveObject(bool enable) 
     {
         _camera.GetComponent<CinemachineBrain>().enabled = enable;
         _player.SetActive(enable);

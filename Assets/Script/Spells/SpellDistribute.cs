@@ -8,10 +8,10 @@ public class SpellDistribute : MonoBehaviour
     public static SpellDistribute Instance;
 
     [SerializeField]
-    List<Cell>  _cells  = new List<Cell>();
+    private List<Cell>  _cells  = new List<Cell>();
 
 
-    void Awake()
+    private void Awake()
     {
         GlobalEventsManager.OnGetSpell.AddListener(SetSpell);
         if (Instance != null)
@@ -19,6 +19,7 @@ public class SpellDistribute : MonoBehaviour
         else
             Instance = this;
     }
+
     public void SetSpell(SpellSO spell) 
     {
         //spellT.gameObject.AddComponent(Type.GetType(Enum.GetName(typeof(SpellScName), spell.NameSc)));

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public static class ExtensionsBasic
+public static class DicrionaryExtensions
 {
-    #region Dictionary Modification
     /// <summary>
     /// Get Random entry where Value is false
     /// and auto filing Value to true for return KeyPair
@@ -25,6 +24,7 @@ public static class ExtensionsBasic
         }
         throw new System.Exception("GetRandom fit entry not found");
     }
+
     /// <summary>
     /// Set all bool value in dictionary to false
     /// </summary>
@@ -39,5 +39,4 @@ public static class ExtensionsBasic
         }
         entry = temp;
     }
-    #endregion
 }

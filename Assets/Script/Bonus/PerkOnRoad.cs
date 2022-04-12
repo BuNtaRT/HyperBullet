@@ -8,10 +8,12 @@ public class PerkOnRoad : ItemOnRoadBase, IItemOnRoad
         _objectT = TypeObj.None;
         InitAwake();
     }
+
     private void OnEnable()
     {
         InitAnim();
     }
+
     public void Pick()
     {
         GlobalEventsManager.CallPerk();

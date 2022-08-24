@@ -72,14 +72,11 @@ public class Shoot : MonoBehaviour
 
     public void PlayerClone1() 
     {
-        Debug.LogWarning("this Working WHAT THIS DOING ????");
         _iClone = 1;
     }
 
     public void PlayerCloneDisable()
     {
-        Debug.LogWarning("this Working WHAT THIS DOING ????");
-
         _iClone = 0;
         _modifiedMethod = "";
     }

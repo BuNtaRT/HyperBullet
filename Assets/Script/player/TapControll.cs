@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 public class TapControll : MonoBehaviour
 {
-    public  SpawnerEnemy    SpawnerEnemy         ;
-    public  SpellPointer    SpellPointer         ;
-    private bool            _disable      = false;
-    private Shoot           _shoot               ;
-    private Vector2         _beganTouch          ;
-    private float           _resolCoeff          ;
-    private bool            _reqNextPoint = false;
-    private Action<Vector3> _nextPointFor        ;
+    public  SpawnerEnemy    SpawnerEnemy          ;
+    public  SpellPointer    SpellPointer          ;
+    private bool            _disable      = false ;
+    private Shoot           _shoot                ;
+    private Vector2         _beganTouch           ;
+    private float           _resolCoeff           ;
+    private bool            _reqNextPoint = false ;
+    private Action<Vector3> _nextPointFor         ;
 
     public static TapControll Instance;
 
